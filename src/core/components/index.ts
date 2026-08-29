@@ -31,6 +31,7 @@ export { BottomSheet } from './BottomSheet';
 export { EmptyState } from './EmptyState';
 export { ErrorState } from './ErrorState';
 export { FAB } from './FAB';
+export { LanguageToggle } from './LanguageToggle';
 export { OfflineBanner } from './OfflineBanner';
 export { SegmentedControl, type Segment } from './SegmentedControl';
 export { Skeleton, SkeletonList } from './Skeleton';

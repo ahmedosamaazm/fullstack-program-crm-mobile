@@ -1,3 +1,4 @@
+import type { ComponentRef, Ref } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
@@ -6,7 +7,7 @@ import { useTheme } from '@/core/lib/theme';
 import { Icon, type IconName } from './Icon';
 import { IconButton } from './IconButton';
 import { Text } from './Text';
-import { TextInput } from './TextInput';
+import { TextInput, type TextInputProps } from './TextInput';
 
 export type TextFieldProps = {
   label: string;
@@ -21,6 +22,18 @@ export type TextFieldProps = {
   helper?: string;
   disabled?: boolean;
   required?: boolean;
+  secureTextEntry?: boolean;
+  keyboardType?: TextInputProps['keyboardType'];
+  autoCapitalize?: TextInputProps['autoCapitalize'];
+  autoComplete?: TextInputProps['autoComplete'];
+  textContentType?: TextInputProps['textContentType'];
+  autoCorrect?: boolean;
+  returnKeyType?: TextInputProps['returnKeyType'];
+  onSubmitEditing?: TextInputProps['onSubmitEditing'];
+  onBlur?: TextInputProps['onBlur'];
+  inputRef?: Ref<ComponentRef<typeof TextInput>>;
+  /** Announced for the trailing icon button. Defaults to `label`. */
+  trailingIconLabel?: string;
 };
 
 const FIELD_HEIGHT = 48;
@@ -37,6 +50,17 @@ export function TextField({
   helper,
   disabled = false,
   required = false,
+  secureTextEntry,
+  keyboardType,
+  autoCapitalize,
+  autoComplete,
+  textContentType,
+  autoCorrect,
+  returnKeyType,
+  onSubmitEditing,
+  onBlur,
+  inputRef,
+  trailingIconLabel,
 }: TextFieldProps) {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -71,11 +95,21 @@ export function TextField({
         ]}
       >
         <TextInput
+          ref={inputRef}
           value={value}
           onChangeText={onChangeText}
+          onBlur={onBlur}
           placeholder={placeholder}
           editable={!disabled}
           accessibilityLabel={showLabel ? undefined : label}
+          secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
+          autoCapitalize={autoCapitalize}
+          autoComplete={autoComplete}
+          textContentType={textContentType}
+          autoCorrect={autoCorrect}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
           style={styles.input}
         />
         {trailingIcon ? (
@@ -83,7 +117,7 @@ export function TextField({
             <IconButton
               icon={trailingIcon}
               onPress={onTrailingIconPress}
-              accessibilityLabel={label}
+              accessibilityLabel={trailingIconLabel ?? label}
               variant="ghost"
               size={24}
             />

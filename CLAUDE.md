@@ -11,11 +11,12 @@ customers, open tickets, work them through a lifecycle, and resolve them. Arabic
 English support, light and dark themes.
 
 The repository has moved past the bare `create-expo-app` template: `src/app/`, `src/core/`, and
-the theme/component layer described in "Target architecture" below exist and boot. What does
-**not** exist yet is any `src/features/` folder — no domain screens (tickets, customers, home,
-notifications, profile, auth) have been built. `src/app/index.tsx` currently renders a
-placeholder rather than a real screen; it will be replaced by real routing once feature work
-starts.
+the theme/component layer described in "Target architecture" below exist and boot. `src/features/`
+now has its first folder, `auth` (login, session context, the route guard) — see
+`.squad/plans/auth/02-story-agent-login-SCRUM-17.md`. No other domain screens (tickets, customers,
+home, notifications, profile) have been built yet. `src/app/index.tsx` currently renders a
+placeholder rather than a real screen; it is the authenticated root the login guard routes to,
+and will be replaced by the Home screen once that feature work starts.
 
 The token layer in `core/lib/theme/` is a faithful, traceable reflection of the Figma design
 system (file `mdfP8RPdkUsKcJb0wFdkME`) — see
@@ -64,30 +65,32 @@ src/
 │   ├── components/   Text, TextInput, Icon (font/icon primitives) — Button, IconButton,
 │   │                 TextField, TextArea, SearchField, Tab/TabBar, SectionHeader,
 │   │                 ModalHeader, SheetHeader, DetailRow, SettingsRow/RowGroup, ActionRow,
-│   │                 FilterChip, Dropzone — plus the original EmptyState, ErrorState,
-│   │                 Skeleton, OfflineBanner, BottomSheet, SegmentedControl, Avatar, FAB
+│   │                 FilterChip, Dropzone, LanguageToggle — plus the original EmptyState,
+│   │                 ErrorState, Skeleton, OfflineBanner, BottomSheet, SegmentedControl,
+│   │                 Avatar, FAB
 │   ├── hooks/        useBreakpoint, useDebounce
 │   ├── lib/          supabase.ts, query-client.ts, theme/, i18n/ (incl. useDirection/DirectionScope)
 │   ├── utils/        format.ts, errors.ts
 │   └── types/        database.ts (generated)
-└── features/   one folder per business domain (none built yet)
+└── features/   one folder per business domain
 ```
 
-Features (none built yet): `auth`, `tickets`, `customers`, `home`, `notifications`, `profile`. Domain-specific
-components (`TicketRow`, `StatusBadge`, `MessageRow`, `AgentRow`, `StatCard`, `BottomNav`, etc.)
-belong under `features/<domain>/components/`, not `core/components/` — they ship with their
-feature, not the design-system pass.
+Features: `auth` (built), `tickets`, `customers`, `home`, `notifications`, `profile` (not built
+yet). Domain-specific components (`TicketRow`, `StatusBadge`, `MessageRow`, `AgentRow`, `StatCard`,
+`BottomNav`, etc.) belong under `features/<domain>/components/`, not `core/components/` — they
+ship with their feature, not the design-system pass.
 
 Every feature has the same anatomy, and `index.ts` is its **only** entry point:
 
 ```
 features/<feature>/
-├── api.ts          Supabase queries and mutations
-├── hooks.ts        TanStack Query hooks wrapping api.ts
+├── api.ts               Supabase queries and mutations
+├── hooks.ts             TanStack Query hooks wrapping api.ts
+├── session-context.tsx  only for a feature that owns React Context state (e.g. `auth`)
 ├── types.ts
 ├── components/
 ├── screens/
-└── index.ts        barrel
+└── index.ts             barrel
 ```
 
 Path aliases: `@/core/*` and `@/features/*`.
@@ -145,8 +148,14 @@ Theme reads the system preference on first launch and persists a manual override
 `userInterfaceStyle` is `"automatic"` (light/dark both supported).
 
 `src/app/_layout.tsx` awaits `bootstrap()` before rendering anything — that's what prevents an
-LTR flash on a cold start in Arabic — then mounts `ThemeProvider`, `QueryClientProvider`, and
-`OfflineBanner` around `<Slot />`, and hides the splash screen.
+LTR flash on a cold start in Arabic — then mounts `ThemeProvider`, `QueryClientProvider`,
+`AuthProvider` and `OfflineBanner`. The splash screen stays up until both bootstrap resolves and
+the session read completes, so an already-signed-in agent never sees a flash of the login screen.
+
+**Routing convention:** authenticated routes live at the router root (`src/app/index.tsx` and
+siblings); unauthenticated routes live under `src/app/(auth)/`. The guard is `Stack.Protected` in
+`src/app/_layout.tsx`'s `RootNavigator`, driven by `useAuth().status` from `@/features/auth` — not
+an imperative `router.replace`.
 
 The app's only font is IBM Plex Sans Arabic (`@expo-google-fonts/ibm-plex-sans-arabic`), loaded
 via `Font.loadAsync()` inside `bootstrap()` — not the `useFonts` hook (can't run before first
