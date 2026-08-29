@@ -1,0 +1,37 @@
+{
+  "common": {
+    "appName": "AZM",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "close": "Close",
+    "done": "Done",
+    "search": "Search",
+    "loading": "Loading"
+  },
+  "tabs": {
+    "home": "Home",
+    "tickets": "Tickets",
+    "customers": "Customers",
+    "profile": "Profile"
+  },
+  "states": {
+    "emptyTitle": "Nothing here yet",
+    "emptyBody": "Items you create will appear here.",
+    "errorTitle": "Something went wrong",
+    "errorBody": "We couldn't load this. Check your connection and try again.",
+    "offline": "You're offline. Some data may be out of date."
+  },
+  "settings": {
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "language": "Language",
+    "languageEnglish": "English",
+    "languageArabic": "Arabic",
+    "restartRequired": "Restart the app to apply the new text direction."
+  },
+  "placeholder": {
+    "screenBody": "This screen is scaffolded. Its feature story will fill it in."
+  }
+}
