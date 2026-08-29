@@ -40,5 +40,26 @@
   },
   "placeholder": {
     "screenBody": "This screen is scaffolded. Its feature story will fill it in."
+  },
+  "auth": {
+    "tagline": "Customer support workspace for your team",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@company.com",
+    "passwordLabel": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign in",
+    "helper": "Accounts are created by your administrator.",
+    "errors": {
+      "emailRequired": "Enter your email address.",
+      "emailInvalid": "Enter a valid email address.",
+      "passwordRequired": "Enter your password.",
+      "invalidCredentials": "Incorrect email or password.",
+      "deactivated": "This account has been deactivated. Contact your administrator.",
+      "rateLimited": "Too many attempts. Try again in a moment.",
+      "network": "Couldn't reach the server. Check your connection.",
+      "unknown": "Sign-in failed. Try again."
+    }
   }
 }

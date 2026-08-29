@@ -34,6 +34,7 @@ export type IconName =
   | 'send'
   | 'clock'
   | 'eye'
+  | 'eyeOff'
   | 'check'
   | 'camera'
   | 'image'
@@ -65,6 +66,7 @@ const ICON_MAP: Record<IconName, MCIName> = {
   send: 'send-outline',
   clock: 'clock-outline',
   eye: 'eye-outline',
+  eyeOff: 'eye-off-outline',
   check: 'check',
   camera: 'camera-outline',
   image: 'image-outline',

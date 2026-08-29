@@ -1,5 +1,5 @@
-import { Text } from '@/core/components';
+import { TempSignedInScreen } from '@/features/auth';
 
 export default function Index() {
-  return <Text>AZM</Text>;
+  return <TempSignedInScreen />;
 }
