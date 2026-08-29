@@ -4,4 +4,4 @@ One row per feature folder under `.squad/plans/`. `NN` continues as a global exe
 
 | Feature | Overview | NN range |
 |---------|----------|----------|
-| _add rows per feature_ |
+| [design-system](design-system/01-reflect-azm-design-system-in-react-native.md) | Replace the hand-written theme token layer with a faithful reflection of Figma (colours, scales, IBM Plex Sans Arabic), build the 16 generic core components, migrate the 8 existing ones, add `eslint.config.js`, and boot the app with a component gallery. | 01 |

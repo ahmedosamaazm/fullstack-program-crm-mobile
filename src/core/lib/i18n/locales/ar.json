@@ -4,9 +4,20 @@
     "retry": "إعادة المحاولة",
     "cancel": "إلغاء",
     "close": "إغلاق",
+    "clear": "مسح",
     "done": "تم",
     "search": "بحث",
     "loading": "جارٍ التحميل"
+  },
+  "field": {
+    "required": "مطلوب",
+    "attach": "إضافة مرفق",
+    "charactersLeft_zero": "لا توجد أحرف متبقية",
+    "charactersLeft_one": "حرف واحد متبقٍ",
+    "charactersLeft_two": "حرفان متبقيان",
+    "charactersLeft_few": "{{formattedCount}} أحرف متبقية",
+    "charactersLeft_many": "{{formattedCount}} حرفًا متبقيًا",
+    "charactersLeft_other": "{{formattedCount}} حرف متبقٍ"
   },
   "tabs": {
     "home": "الرئيسية",

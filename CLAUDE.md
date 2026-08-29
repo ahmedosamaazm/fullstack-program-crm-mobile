@@ -10,15 +10,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 customers, open tickets, work them through a lifecycle, and resolve them. Arabic-first with
 English support, light and dark themes.
 
-The repository is currently a bare `create-expo-app` blank-TypeScript template — `App.tsx`,
-`index.ts`, `tsconfig.json`, and four dependencies (`expo`, `expo-status-bar`, `react`,
-`react-native`). **Nothing in the "Target architecture" section below exists yet.** It is the
-agreed design, recorded so that scaffolding stories build toward one shape rather than
-improvising per-story.
+The repository has moved past the bare `create-expo-app` template: `src/app/`, `src/core/`, and
+the theme/component layer described in "Target architecture" below exist and boot. What does
+**not** exist yet is any `src/features/` folder — no domain screens (tickets, customers, home,
+notifications, profile, auth) have been built. `src/app/index.tsx` currently renders a
+placeholder rather than a real screen; it will be replaced by real routing once feature work
+starts.
 
-When you add a piece of it, treat this file as the spec — and when reality and this file
-diverge, fix this file in the same change. A previous CLAUDE.md here described a completely
-different app; do not let that happen again.
+The token layer in `core/lib/theme/` is a faithful, traceable reflection of the Figma design
+system (file `mdfP8RPdkUsKcJb0wFdkME`) — see
+`.squad/plans/design-system/01-reflect-azm-design-system-in-react-native.md` for the resolved
+values, the component-by-component spec, and ten flags raised back to design (§15) that still
+need a design decision (e.g. `FilterChip`'s off-scale legacy tokens, Arabic uppercase+tracking on
+`SectionHeader`). Don't silently resolve those flags — they're open questions, not settled ones.
+
+When you add a piece of the target architecture that doesn't exist yet (a feature folder, a
+domain component), treat this file as the spec — and when reality and this file diverge, fix
+this file in the same change. A previous CLAUDE.md here described a completely different app; do
+not let that happen again.
 
 ## Commands
 
@@ -30,9 +39,10 @@ npm run ios        # expo start --ios
 npm run web        # expo start --web
 ```
 
-That is the whole script list today. There is **no lint script, no test runner, and no ESLint
-config** — `npm run lint` will fail until someone adds `expo lint` plus a config. There are no
-test files and no Jest setup.
+`npm run lint` and `npm run typecheck` are both real gates now — `eslint.config.js` enforces
+hard rules 2–5 below (see "Hard rules"). There is still **no test runner** — no Jest setup, no
+test files. `typecheck` + `lint` + manually exercising the app (`npm start`, then the `a`/
+`i`/`w` keys) are the whole safety net until one is added.
 
 Database types are generated, never hand-written:
 
@@ -51,16 +61,22 @@ src/
 ├── app/        expo-router routes ONLY — a route file imports a screen from a
 │               feature and renders it. Nothing else.
 ├── core/       infrastructure and generic, domain-free code
-│   ├── components/   EmptyState, ErrorState, Skeleton, OfflineBanner,
-│   │                 BottomSheet, SegmentedControl, Avatar, FAB
+│   ├── components/   Text, TextInput, Icon (font/icon primitives) — Button, IconButton,
+│   │                 TextField, TextArea, SearchField, Tab/TabBar, SectionHeader,
+│   │                 ModalHeader, SheetHeader, DetailRow, SettingsRow/RowGroup, ActionRow,
+│   │                 FilterChip, Dropzone — plus the original EmptyState, ErrorState,
+│   │                 Skeleton, OfflineBanner, BottomSheet, SegmentedControl, Avatar, FAB
 │   ├── hooks/        useBreakpoint, useDebounce
-│   ├── lib/          supabase.ts, query-client.ts, theme/, i18n/
+│   ├── lib/          supabase.ts, query-client.ts, theme/, i18n/ (incl. useDirection/DirectionScope)
 │   ├── utils/        format.ts, errors.ts
 │   └── types/        database.ts (generated)
-└── features/   one folder per business domain
+└── features/   one folder per business domain (none built yet)
 ```
 
-Features: `auth`, `tickets`, `customers`, `home`, `notifications`, `profile`.
+Features (none built yet): `auth`, `tickets`, `customers`, `home`, `notifications`, `profile`. Domain-specific
+components (`TicketRow`, `StatusBadge`, `MessageRow`, `AgentRow`, `StatCard`, `BottomNav`, etc.)
+belong under `features/<domain>/components/`, not `core/components/` — they ship with their
+feature, not the design-system pass.
 
 Every feature has the same anatomy, and `index.ts` is its **only** entry point:
 
@@ -95,8 +111,8 @@ Forms use React Hook Form. Localisation is i18next + react-i18next.
 
 1. **Route files stay thin.** Import a screen, render it. No data fetching, no layout logic in
    `src/app/`.
-2. **`core/lib/theme/tokens.ts` is the only file that may contain a colour literal.** Hex values
-   are banned everywhere else.
+2. **`core/lib/theme/primitives.ts` is the only file that may contain a colour literal.** Hex
+   values are banned everywhere else — `colors.ts` aliases the 35 semantic tokens onto it.
 3. **`features/` imports from `core/`. `core/` never imports from `features/`.** This direction
    is one-way and non-negotiable.
 4. **Features import each other only through barrels** — `@/features/tickets`, never
@@ -105,10 +121,13 @@ Forms use React Hook Form. Localisation is i18next + react-i18next.
    `marginRight`. The app must work in RTL.
 6. **`src/core/types/database.ts` is generated. Never hand-edit it.** Regenerate instead.
 
-Rules 2, 3, 4, and 5 are meant to be enforced by ESLint (`no-restricted-syntax` for hex
-literals and physical layout props, `no-restricted-imports` with path patterns for the layering
-and deep-import bans). Until that config exists, they are enforced by review — apply them
-anyway.
+Rules 2, 3, 4, and 5 are enforced by `eslint.config.js` (`no-restricted-syntax` for hex literals,
+`fontWeight`/`fontFamily` style keys, and physical layout props; `no-restricted-imports` with
+path patterns for the layering and deep-import bans). It also bans importing `Text`/`TextInput`
+from `react-native` anywhere except `core/components/Text.tsx`/`TextInput.tsx` themselves — the
+single-font rule: every piece of text must go through those two primitives, which resolve a
+`weight` prop to a concrete `fontFamily` rather than ever emitting `fontWeight` next to a custom
+font (Android doesn't synthesise weight for custom families, so the two must never coexist).
 
 ## RTL and locale
 
@@ -119,23 +138,24 @@ tree, rather than in an effect. Any provider wiring that defers this reintroduce
 
 Theme reads the system preference on first launch and persists a manual override thereafter.
 
-## Wiring notes for whoever scaffolds this
+## Entry and fonts
 
-The current entry setup is incompatible with the target and must change together, not piecemeal:
+`package.json` `main` is `expo-router/entry`; `app.json` sets `"expo-router"` with an explicit
+`{ "root": "./src/app" }` since routes live under `src/app/`, not the package default. `app.json`
+`userInterfaceStyle` is `"automatic"` (light/dark both supported).
 
-- `package.json` `main` is `index.ts`, which calls `registerRootComponent(App)`. expo-router
-  requires `main: "expo-router/entry"`; `App.tsx` and `index.ts` then go away in favour of
-  `src/app/_layout.tsx`.
-- `src/app/` is a non-default router root — it needs the corresponding expo-router
-  configuration, not just the folder.
-- `app.json` sets `"userInterfaceStyle": "light"`, which contradicts the light/dark requirement
-  and must become `"automatic"`.
-- `app.json` declares no `plugins` array; expo-router and any native modules added later belong
-  there.
-- Supabase session persistence uses AsyncStorage, which is a separate dependency from the
-  Supabase client.
-- `/ios` and `/android` are gitignored. Native config goes in `app.json`, never in hand-edited
-  native folders.
+`src/app/_layout.tsx` awaits `bootstrap()` before rendering anything — that's what prevents an
+LTR flash on a cold start in Arabic — then mounts `ThemeProvider`, `QueryClientProvider`, and
+`OfflineBanner` around `<Slot />`, and hides the splash screen.
+
+The app's only font is IBM Plex Sans Arabic (`@expo-google-fonts/ibm-plex-sans-arabic`), loaded
+via `Font.loadAsync()` inside `bootstrap()` — not the `useFonts` hook (can't run before first
+paint) and not the Expo config plugin (requires a dev build, and forces a `Platform.select` into
+the weight→family map). See `core/lib/theme/fonts.ts` for the tradeoffs and the migration path if
+the team later adopts dev builds.
+
+`/ios` and `/android` are gitignored. Native config goes in `app.json`, never in hand-edited
+native folders.
 
 ## Working in this repo
 

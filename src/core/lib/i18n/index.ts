@@ -7,6 +7,8 @@ import { I18nManager } from 'react-native';
 import ar from './locales/ar.json';
 import en from './locales/en.json';
 
+export { useDirection, DirectionScope, type Direction } from './direction';
+
 const LOCALE_KEY = 'azm.locale';
 
 export const SUPPORTED_LOCALES = ['ar', 'en'] as const;

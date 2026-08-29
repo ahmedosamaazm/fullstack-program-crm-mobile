@@ -4,9 +4,16 @@
     "retry": "Try again",
     "cancel": "Cancel",
     "close": "Close",
+    "clear": "Clear",
     "done": "Done",
     "search": "Search",
     "loading": "Loading"
+  },
+  "field": {
+    "required": "Required",
+    "attach": "Add attachment",
+    "charactersLeft_one": "{{formattedCount}} character left",
+    "charactersLeft_other": "{{formattedCount}} characters left"
   },
   "tabs": {
     "home": "Home",

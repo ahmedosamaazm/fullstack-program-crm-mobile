@@ -26,7 +26,7 @@
       "expo-secure-store",
       "expo-localization",
       "expo-font",
-      "expo-router",
+      ["expo-router", { "root": "./src/app" }],
       "expo-splash-screen"
     ],
     "scheme": "azmcrm",
