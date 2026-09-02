@@ -32,6 +32,25 @@ AI tooling (Claude Code with the Jira and Figma MCP servers) is used throughout 
 the process for doing so is itself part of what the project demonstrates. See
 [How the project came together](#how-the-project-came-together).
 
+### Deliberately unfamiliar ground
+
+The stack here was chosen to be unfamiliar. The program assesses whether I can plan, build and
+verify a system, so reusing the one I already knew would have demonstrated less. Each row names
+what was familiar beforehand and what was chosen instead.
+
+| Familiar | Chosen here |
+|---|---|
+| Flutter and Dart | React Native and Expo on TypeScript strict |
+| Spec Kit and Superpowers | squad-kit's spec-driven loop |
+| A conventional API backend | Supabase: Postgres, RLS, triggers and Storage |
+| Designing in the Figma UI | Figma MCP: variables, component sets and screens written through the API |
+| Azure DevOps MCP | Jira MCP inside the build loop |
+
+Two of those switches produced gaps this project still carries, which belongs in the record as
+much as the rest. The Expo repo has no test runner, where an equivalent Flutter project would
+have had widget tests from the first commit. The Supabase schema was built through the SQL
+Editor and is not yet version-controlled.
+
 ---
 
 ## Contents
