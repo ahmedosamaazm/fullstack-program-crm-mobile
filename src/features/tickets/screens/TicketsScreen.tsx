@@ -149,7 +149,6 @@ export function TicketsScreen({ requestedFilter, requestedFilterNonce }: Tickets
       <FAB
         onPress={() => router.push('/tickets/new')}
         accessibilityLabel={t('ticket.new')}
-        bottomOffset={theme.spacing.xxxl}
       />
     </SafeAreaView>
   );

@@ -144,7 +144,6 @@ export function CustomersScreen() {
       <FAB
         onPress={() => router.push('/customers/new')}
         accessibilityLabel={t('customers.newCustomer')}
-        bottomOffset={theme.spacing.xxxl}
       />
     </SafeAreaView>
   );
