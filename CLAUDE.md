@@ -330,7 +330,35 @@ project `azm-crm`). The intended loop is: `squad new-story <slug>` scaffolds an 
 fresh, scoped session. Plans are indexed in `.squad/plans/00-index.md`.
 `.squad/secrets.yaml` is gitignored — never read it into context or echo it.
 
-`.claude/settings.json` enables the official Expo plugin.
+When implementing a `NN-story-*.md`, the plan is the contract and these rules govern how it is
+read — a plan cannot enforce them about itself:
+
+- **The plan file is read-only.** Never edit it to match what got built, and never touch a first
+  line starting `<!-- squad-kit:`. If the plan is wrong, stop and say so — revising it is
+  `/squad-plan`'s job and the user's call.
+- **`## Prerequisites` are gates, not context.** An undeployed table, policy or bucket, or a stale
+  `database.ts`, means stop and report — never build against a schema that isn't there.
+- **When the plan and the repo disagree, follow the repo** and report the drift. Plans are written
+  before implementation; drift is expected, silently picking either side is not.
+- **Never resolve an `## Open questions` item.** They are decisions parked for a human. Carry every
+  one into the final report, the PR body and the Jira comment verbatim — a resolved open question
+  produces code that passes every gate and is wrong.
+- **Finish in order:** `/rn-code-review` (which runs the three gates), walk `## Done Criteria`,
+  update this file's "Project status", then `/create-pr`. One plan per session; story 14's
+  `STOP HERE … before proceeding to Story 15` is the rule, not an exception.
+
+`.claude/settings.json` enables the official Expo plugin and wires two repo-scoped hooks from
+`.claude/hooks/`: `rn-guard.cjs` blocks hand-edits to `database.ts`, any access to
+`.squad/secrets.yaml`, and writes into `/ios` or `/android`; `rn-post-edit.cjs` runs `eslint
+--fix` on every touched `.ts`/`.tsx` and feeds surviving errors back, asserts `en.json` and
+`ar.json` carry the same key tree (plural-aware — a missing Arabic plural *form* is still a
+human check), and reports Expo SDK version drift on `package.json` as an advisory. Repo-scoped
+skills live in `.claude/skills/` (`rn-code-review`, `rn-feature`, `rn-l10n`,
+`rn-screen-from-figma`), commands in `.claude/commands/` (`/gates`, `/gen-types`, the two
+`squad-*`), and the read-only `rn-design-fidelity-auditor` agent in `.claude/agents/`.
+Prettier is **not** run by the hook: the repo has no prettier config and was never formatted
+with it, so `npm run format` is currently a ~145-file rewrite — treat it as such until a
+`.prettierrc` and a one-time format commit land.
 
 Expo 57 changed significantly. Per `AGENTS.md`, check the versioned docs at
 https://docs.expo.dev/versions/v57.0.0/ before writing code against an Expo API — do not rely
