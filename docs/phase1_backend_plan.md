@@ -10,7 +10,7 @@ Supabase-backed. Covers everything the backend must provide for Phase 1, marking
 
 | Area | State |
 |---|---|
-| 1. Schema & constraints | ✅ Complete |
+| 1. Schema & constraints | ✅ Complete — 12 tables |
 | 2. State machine | ✅ Complete |
 | 3. RLS — staff access | ✅ Complete |
 | 4. Indexes | ✅ Complete |
@@ -23,7 +23,7 @@ Supabase-backed. Covers everything the backend must provide for Phase 1, marking
 | 11. Migrations & environments | 🔨 Not started |
 | 12. Ops — backups, monitoring | 🔨 Not started |
 
-**Roughly 70% of Phase 1 backend work is complete.** Schema, access control, storage, and in-app notifications are done and verified. The customer-facing token API and email delivery remain.
+**Roughly 75% of Phase 1 backend work is complete.** Schema, access control, storage, in-app notifications, and customer notes are done and verified. The customer-facing token API and email delivery remain — and the **email provider decision is now the single bottleneck** blocking six items (§8, §9's email half, SCRUM-19's full flow, SCRUM-40, SCRUM-41, and US-031 push).
 
 ---
 
@@ -32,42 +32,120 @@ Supabase-backed. Covers everything the backend must provide for Phase 1, marking
 Documented in full, with all SQL, in `supabase_setup_guide.md`. Summarised here for completeness.
 
 ### 1. Schema ✅
-13 tables: `departments`, `branches`, `profiles`, `customers`, `categories`, `tickets`, `ticket_messages`, `ticket_events`, `attachments`, `csat_responses`, `access_tokens`, `notifications` (§9), `customer_notes`.
+**12 tables:** `departments`, `branches`, `profiles`, `customers`, `categories`, `tickets`, `ticket_messages`, `ticket_events`, `attachments`, `csat_responses`, `access_tokens`, `customer_notes`.
 Four enums. Bilingual name columns throughout. `is_internal` deliberately has **no default**.
 
-**`customer_notes`** — free-text notes on a customer record, supporting US-010 (BRD `:586`).
+> **`customer_notes` was added mid-project.** US-010's first acceptance criterion — "a note saves with my name and timestamp" — assumed a table that was never modelled in the original schema. Found when the notes half of SCRUM-26 could not be built. Modelled on `ticket_messages`: no UPDATE or DELETE policy, scope inherited from the parent customer.
 
 ```sql
 create table customer_notes (
   id          uuid primary key default gen_random_uuid(),
   customer_id uuid not null references customers(id) on delete cascade,
   author_id   uuid not null references profiles(id),
-  body        text not null,
+  body        text not null check (char_length(body) between 1 and 5000),
   created_at  timestamptz not null default now()
 );
+
+create index idx_customer_notes_customer
+  on customer_notes(customer_id, created_at desc);
+
+alter table customer_notes enable row level security;
+
+create policy select_notes on customer_notes for select to authenticated
+  using (exists (select 1 from customers c where c.id = customer_id
+                 and c.department_id = current_department()
+                 and c.branch_id = current_branch()));
+
+create policy insert_notes on customer_notes for insert to authenticated
+  with check (exists (select 1 from customers c where c.id = customer_id
+                      and c.department_id = current_department()
+                      and c.branch_id = current_branch()));
 ```
 
-Policies `select_notes` and `insert_notes` scope through the **parent customer's** department and branch — the table carries no `department_id`/`branch_id` of its own, so the join is the scoping. **No UPDATE or DELETE policy**, so a note is immutable by omission, the same pattern as `ticket_events`.
+**Verified:** both policies present via `pg_policies`.
 
 ### 2. State machine ✅
 `enforce_ticket_transition()` trigger rejects illegal transitions at the database level and requires a resolution note when resolving. `log_ticket_assignment()` records assignment changes. Both write to `ticket_events` automatically.
 
 **Verified:** `new → closed` raises an exception; resolving without a note raises an exception.
 
-**`trg_assignee_scope`** — rejects assigning a ticket to an agent outside that ticket's department or branch, raising *"Assignee is outside this ticket's department or branch"*.
+### 2b. Assignment scope enforcement ✅ — added mid-project
 
-**Verified:** the invalid cross-branch case raises; the valid case passes.
+A ticket could be assigned to an agent outside its department or branch. The assign sheet filters agents by department in the UI, but nothing enforced it in the database — so a direct API call, or a bug in that filter, produced a ticket the assignee could not read and a notification pointing at it.
 
-This closes a real hole rather than a theoretical one. Before it existed, a cross-branch assignment **succeeded**, and produced a ticket the new assignee could not read — RLS filtered it out of every list — plus an orphaned `notifications` row pointing at it. The write side had no equivalent of the read side's department/branch scoping, so assignment could place a ticket somewhere its owner could not follow it.
+Found in practice: a ticket was assigned across branches during trigger testing, the notification fired correctly, and the detail screen returned `[]` for the recipient.
 
-> **This trigger reached production without appearing in any schema document**, and was added to this section only after the bug above surfaced it. See `docs/phase1_known_issues.md` → *Schema drift*: until §11 (migrations) is real, neither this file nor `supabase_setup_guide.md` can be trusted as a complete inventory of what the database enforces.
+```sql
+create or replace function enforce_assignee_scope()
+returns trigger language plpgsql as $$
+declare
+  v_dept uuid;
+  v_branch uuid;
+begin
+  if new.assigned_to is null then
+    return new;
+  end if;
+
+  select department_id, branch_id into v_dept, v_branch
+  from profiles where id = new.assigned_to;
+
+  if v_dept is distinct from new.department_id
+     or v_branch is distinct from new.branch_id then
+    raise exception 'Assignee is outside this ticket''s department or branch';
+  end if;
+
+  return new;
+end $$;
+
+create trigger trg_assignee_scope
+  before insert or update of assigned_to on tickets
+  for each row execute function enforce_assignee_scope();
+```
+
+**Verified:** a cross-branch assignment raises `P0001: Assignee is outside this ticket's department or branch`.
 
 ### 3. RLS — staff ✅
 `SECURITY DEFINER` helpers (`current_department()`, `current_branch()`, `current_role_name()`) avoid policy recursion. Every policy on `customers` and `tickets` scopes by `department_id AND branch_id`, with an admin bypass. No delete policies for agents anywhere. `ticket_events` is read-only by omission. `access_tokens` has zero client policies.
 
 **Verified via Postman** with real JWTs: Omar sees 2 customers, Layla sees 1, neither sees the other's.
 
-**`attachments` table policies** — distinct from the `storage.objects` path policies in §7; those govern the *file*, these govern the *row*. `select_attachments` scopes through the parent ticket or customer (the table has no `department_id`/`branch_id` of its own). `insert_attachments` **now carries the same predicate** — it previously had `with check (true)`, which let any authenticated agent create a row pointing at any ticket or customer in the system. Fixed and confirmed via `pg_policies`; see `docs/phase1_known_issues.md` → *Resolved*. **These policies had never been written down**, which is why the hole survived: BRD `:256` asserted *CRU — own dept* and no document said where that was enforced.
+### 3b. `attachments` insert policy — tightened mid-project ✅
+
+`insert_attachments` shipped with `with check (true)`, meaning any authenticated agent could create an attachment row pointing at **any** ticket, customer, or message — including ones outside their scope. The file itself was protected by the storage policies, but the row was not.
+
+Found by questioning where the `attachments` scoping documented in BRD §7 actually came from. `select_attachments` was correctly scoped; the write side had no scoping at all.
+
+Replaced with the same predicate as the select policy:
+
+```sql
+drop policy insert_attachments on attachments;
+
+create policy insert_attachments on attachments for insert to authenticated
+with check (
+  (ticket_id is not null and exists (
+    select 1 from tickets t where t.id = ticket_id
+      and t.department_id = current_department()
+      and t.branch_id = current_branch()))
+  or (customer_id is not null and exists (
+    select 1 from customers c where c.id = customer_id
+      and c.department_id = current_department()
+      and c.branch_id = current_branch()))
+  or (message_id is not null and exists (
+    select 1 from ticket_messages m
+      join tickets t on t.id = m.ticket_id
+     where m.id = message_id
+       and t.department_id = current_department()
+       and t.branch_id = current_branch()))
+);
+```
+
+**Verified:** `pg_policies` now shows the full scoping expression in `with_check` rather than `true`.
+
+> Worth noting how this was found: not by a test failing, but by a documentation question — "where is the scoping for this table actually defined?" The answer turned out to be "only on reads."
+
+### 5b. Seed data caveat
+
+The seed data now includes one deliberate correction. `TKT-202608-0001` was briefly assigned across branches during trigger testing, which produced an orphaned notification. Both were reverted, and `trg_assignee_scope` (§2b) now prevents a recurrence.
 
 ### 4. Indexes ✅
 Every RLS-filtered column indexed, plus status, created_at, and lookup columns.
@@ -178,7 +256,18 @@ where schemaname = 'storage' and tablename = 'objects';
 
 Returns three rows: DELETE, SELECT, INSERT. Also visible under **Storage → attachments → Policies** in the dashboard.
 
-> **Table RLS does not protect files.** An agent blocked from an `attachments` row can still fetch the object unless these policies independently enforce the same scope. Two separate security surfaces. The Postman collection's `07 Storage → Negative tests` folder covers this — cross-branch upload and cross-branch signing must both be refused.
+**Tested with real JWTs via Postman:**
+
+| Test | Result |
+|---|---|
+| Omar uploads to his own Cairo/Technical Support path | ✅ Succeeded — object key returned |
+| Upload with `Content-Type: application/json` | ✅ Refused — `415 InvalidMimeType`, bucket MIME restriction working |
+| **Omar uploads to Alexandria's path** | ✅ **Refused — `403 AccessDenied`, "new row violates row-level security policy"** |
+| Omar signs a URL under Alexandria's path | ⚠️ `404 NoSuchKey` — **inconclusive** |
+
+> **The signing test is not yet proof.** It returned 404 because nothing had ever been successfully written to Alexandria's path — the upload test correctly prevented that. So it proves Omar cannot sign a file that does not exist, not that he cannot sign one that does. To close it properly: place a file at that path using the service key or the dashboard, then have Omar attempt to sign it. Until then, read protection is supported by inference — the select policy uses the identical `foldername` predicate as the insert policy, which is proven — rather than by direct evidence.
+
+> **Table RLS does not protect files.** An agent blocked from an `attachments` row can still fetch the object unless these policies independently enforce the same scope. Two separate security surfaces.
 
 ### Still to do on the client side
 
@@ -335,7 +424,19 @@ type      | title                  | body
 assigned  | Ticket assigned to you | TKT-202608-0001 · Payment gateway timeout at checkout
 ```
 
-Then, through real JWTs in Postman: Omar returns `[]`, Layla returns her single row with the correct `recipient_id`. Both halves matter — one without the other doesn't distinguish a working policy from one that blocks everything.
+**Tested with real JWTs via Postman:**
+
+| Test | Result |
+|---|---|
+| Layla lists her notifications | ✅ One row, correct `recipient_id` |
+| Omar lists notifications (no filter in query) | ✅ `[]` — RLS scopes it regardless |
+| Unread count | ✅ `[{ "count": 1 }]` — returned in the body, not only the header |
+| Layla marks one read | ✅ `is_read: true`, count drops to `0` |
+| **Any agent attempts INSERT** | ✅ **Refused — `403`, code `42501`, "new row violates row-level security policy"** |
+
+Both halves of the read test matter. Omar returning `[]` alone doesn't distinguish a working policy from one that blocks everything; Layla returning her own row is what proves it isn't over-blocking.
+
+The insert refusal is a particularly clean result — `42501` is Postgres explicitly denying the write, not a silent no-op returning zero rows. That's the unambiguous version of a distinction that matters elsewhere in this schema: `ticket_events`' PATCH refusal returns an empty array rather than a 403, which is correct but weaker evidence.
 
 ### The two remaining types
 
@@ -431,6 +532,7 @@ Not Phase 1 work. Listed so nobody builds them early.
 | The Node/Nest ingestion service | 3 |
 | Customer accounts and portal auth | 3 |
 | AI features and any LLM provider integration | 4 |
+| Agent push notifications (US-031) — *if deferred, see open decision 5* | 2? |
 
 ---
 
@@ -444,10 +546,26 @@ Each item unblocks app work that would otherwise stall.
 | 2 | **Auth provisioning (§6)** | Login can't be built properly without it |
 | ~~3~~ | ~~Storage (§7)~~ | ✅ **Done** — bucket, 3 policies, verified |
 | ~~4~~ | ~~Notifications table (§9, in-app)~~ | ✅ **Done** — table, RLS, 3 triggers, verified |
-| 3 | **Search (§10)** | Small, unblocks two stories |
-| 4 | **Token API (§8)** | Largest remaining piece, most security surface. Unblocks 5 stories |
-| 5 | **Email delivery (§9)** | Needs a provider decision and RTL template work |
-| 6 | **Ops (§12)** | Before pilot, not before development |
+| ~~3~~ | ~~`customer_notes` table~~ | ✅ **Done** — table, 2 policies, verified |
+| 3 | **Choose an email provider** | Not code. A decision, and it blocks everything below |
+| 4 | **Search (§10)** | Small, unblocks two stories |
+| 5 | **Token API (§8)** | Largest remaining piece, most security surface. Unblocks 5 stories |
+| 6 | **Email delivery (§9)** | Needs the provider decision and RTL template work |
+| 7 | **Ops (§12)** | Before pilot, not before development |
+
+### The email provider decision is now the bottleneck
+
+It blocks more than its own section suggests:
+
+| Blocked | Why |
+|---|---|
+| §8 Token API | The magic link has to be delivered somehow |
+| §9 email half | Directly |
+| SCRUM-19 Password reset | The full flow needs a real recovery email, and `@azm.test` addresses can't receive one |
+| SCRUM-40, SCRUM-41 | Directly |
+| US-031 Agent push | Not email, but the same "how does a notification leave the system" question |
+
+Everything else remaining in Phase 1 is either a verification pass or a small client fix. This one decision gates six items.
 
 **Item 1 (migrations) is still the one to do today** — and it now matters more, since §7 and §9 added schema through the SQL Editor that isn't version-controlled either. `supabase db pull` captures all of it at once.
 
@@ -457,7 +575,9 @@ Each item unblocks app work that would otherwise stall.
 
 Four things that need a call before the work above can be finished:
 
-1. **Email provider** — Resend, SendGrid, or Postmark. Affects §9 entirely.
+1. **Email provider** — Resend, SendGrid, or Postmark. **The critical path.** Affects §8, §9, and four stories. Note that Supabase's built-in SMTP for auth emails is heavily rate-limited and uses generic Supabase branding, so it isn't viable beyond development.
 2. **RPC vs Edge Functions** for the customer token API — affects §8's structure and rate-limiting approach.
 3. **Trigger vs queue** for notification delivery — correctness versus simplicity.
 4. **Staging environment** — whether to run one now or accept production-only until the pilot.
+5. **Is agent push (US-031) Phase 1 or Phase 2?** It arrived as a criterion on SCRUM-45 that this codebase can't meet — no `expo-notifications`, no device-token table, no sender. Moved to its own story. Deferring to Phase 2 is defensible: a 3–5 agent pilot will have the app open during working hours, and building a second delivery transport before the first is decided is poor sequencing.
+6. **The signed-URL denial gate (§7)** — place a file in Alexandria's path and retest, or accept inference from the proven insert policy.

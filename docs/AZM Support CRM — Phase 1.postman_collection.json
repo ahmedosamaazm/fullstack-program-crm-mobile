@@ -1,0 +1,2944 @@
+{
+  "info": {
+    "_postman_id": "9af5c7ce-2942-4ffe-af73-afacfadc0a6a",
+    "name": "AZM Support CRM — Phase 1",
+    "description": "Phase 1 API collection. See phase1_api_reference.md. Requests marked [PENDING] require backend work not yet done.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57797078"
+  },
+  "item": [
+    {
+      "name": "00 Auth",
+      "item": [
+        {
+          "name": "Sign in — Omar (TechSupport/Cairo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const j = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', j.access_token);",
+                  "pm.collectionVariables.set('refresh_token', j.refresh_token);",
+                  "pm.collectionVariables.set('user_id', j.user.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"omar@azm.test\",\n  \"password\": \"123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                }
+              ]
+            },
+            "description": "Captures access_token, refresh_token and user_id into collection variables."
+          },
+          "response": []
+        },
+        {
+          "name": "Sign in — Layla (TechSupport/Alexandria)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const j = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', j.access_token);",
+                  "pm.collectionVariables.set('refresh_token', j.refresh_token);",
+                  "pm.collectionVariables.set('user_id', j.user.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"layla@azm.test\",\n  \"password\": \"123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                }
+              ]
+            },
+            "description": "Captures access_token, refresh_token and user_id into collection variables."
+          },
+          "response": []
+        },
+        {
+          "name": "Sign in — Amara (Billing/Cairo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', j.access_token);",
+                  "pm.collectionVariables.set('refresh_token', j.refresh_token);",
+                  "pm.collectionVariables.set('user_id', j.user.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"amara@azm.test\",\n  \"password\": \"REPLACE_ME\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                }
+              ]
+            },
+            "description": "Captures access_token, refresh_token and user_id into collection variables."
+          },
+          "response": []
+        },
+        {
+          "name": "Sign in — Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', j.access_token);",
+                  "pm.collectionVariables.set('refresh_token', j.refresh_token);",
+                  "pm.collectionVariables.set('user_id', j.user.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@azm.test\",\n  \"password\": \"REPLACE_ME\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                }
+              ]
+            },
+            "description": "Captures access_token, refresh_token and user_id into collection variables."
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', j.access_token);",
+                  "pm.collectionVariables.set('refresh_token', j.refresh_token);",
+                  "pm.collectionVariables.set('user_id', j.user.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/v1/token?grant_type=refresh_token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "refresh_token"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Current user",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/v1/user",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request password reset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"omar@azm.test\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/v1/recover",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "recover"
+              ]
+            },
+            "description": "Always returns success — cannot be used to enumerate accounts."
+          },
+          "response": []
+        },
+        {
+          "name": "Sign out",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/v1/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "01 Reference",
+      "item": [
+        {
+          "name": "Departments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/departments?select=id,name_en,name_ar&is_active=eq.true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "departments"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,name_en,name_ar"
+                },
+                {
+                  "key": "is_active",
+                  "value": "eq.true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Branches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/branches?select=id,name_en,name_ar&is_active=eq.true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "branches"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,name_en,name_ar"
+                },
+                {
+                  "key": "is_active",
+                  "value": "eq.true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/categories?select=id,name_en,name_ar&is_active=eq.true&order=sort_order",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,name_en,name_ar"
+                },
+                {
+                  "key": "is_active",
+                  "value": "eq.true"
+                },
+                {
+                  "key": "order",
+                  "value": "sort_order"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "My profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/profiles?select=*,departments(name_en,name_ar),branches(name_en,name_ar)&id=eq.{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "profiles"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*,departments(name_en,name_ar),branches(name_en,name_ar)"
+                },
+                {
+                  "key": "id",
+                  "value": "eq.{{user_id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 Customers",
+      "item": [
+        {
+          "name": "List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?select=id,full_name,phone,email,created_at&order=full_name&limit=50",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,full_name,phone,email,created_at"
+                },
+                {
+                  "key": "order",
+                  "value": "full_name"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List with open ticket counts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?select=id,full_name,phone,tickets(count)&tickets.status=in.(new,open,pending)",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,full_name,phone,tickets(count)"
+                },
+                {
+                  "key": "tickets.status",
+                  "value": "in.(new,open,pending)"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?or=(full_name.ilike.*ahmed*,phone.ilike.*ahmed*,email.ilike.*ahmed*)",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "or",
+                  "value": "(full_name.ilike.*ahmed*,phone.ilike.*ahmed*,email.ilike.*ahmed*)"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (Array.isArray(j) && j[0]) pm.collectionVariables.set('customer_id', j[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Test Customer\",\n  \"phone\": \"+201009998888\",\n  \"email\": \"test@example.com\",\n  \"secondary_contacts\": [],\n  \"department_id\": \"11111111-1111-1111-1111-111111111111\",\n  \"branch_id\": \"33333333-3333-3333-3333-333333333333\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"updated@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?id=eq.{{customer_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{customer_id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detail with ticket history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?select=*,tickets(id,reference,subject,status,priority,created_at)&id=eq.{{customer_id}}&tickets.order=created_at.desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*,tickets(id,reference,subject,status,priority,created_at)"
+                },
+                {
+                  "key": "id",
+                  "value": "eq.{{customer_id}}"
+                },
+                {
+                  "key": "tickets.order",
+                  "value": "created_at.desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 Tickets",
+      "item": [
+        {
+          "name": "Negative tests",
+          "item": [
+            {
+              "name": "MUST FAIL — illegal transition new→closed",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('rejects illegal transition', () => pm.expect(pm.response.code).to.be.oneOf([400,409,500]));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "return=representation"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"closed\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/rest/v1/tickets?id=eq.{{ticket_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "v1",
+                    "tickets"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "eq.{{ticket_id}}"
+                    }
+                  ]
+                },
+                "description": "Expect: Illegal transition. Run against a ticket in 'new' status."
+              },
+              "response": []
+            },
+            {
+              "name": "MUST FAIL — resolve without note",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('requires resolution note', () => pm.expect(pm.response.code).to.be.oneOf([400,409,500]));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "return=representation"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"resolved\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/rest/v1/tickets?id=eq.{{ticket_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "v1",
+                    "tickets"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "eq.{{ticket_id}}"
+                    }
+                  ]
+                },
+                "description": "Expect: A resolution note is required when resolving a ticket."
+              },
+              "response": []
+            },
+            {
+              "name": "MUST FAIL — mutate ticket_events",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('history is immutable', () => pm.expect(pm.response.json()).to.eql([]));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "return=representation"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to_value\": \"tampered\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/rest/v1/ticket_events?ticket_id=eq.{{ticket_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "v1",
+                    "ticket_events"
+                  ],
+                  "query": [
+                    {
+                      "key": "ticket_id",
+                      "value": "eq.{{ticket_id}}"
+                    }
+                  ]
+                },
+                "description": "SAFE TO RUN against the live project. No policy grants update or delete on ticket_events for any authenticated role, so this PATCH cannot succeed and cannot alter data — RLS blocks it before it reaches the table. Expect an empty array response (0 rows affected), not an error. Run this after signing in via 00 Auth as any seeded agent."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "List — Mine",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=id,reference,subject,status,priority,created_at,customers(full_name)&assigned_to=eq.{{user_id}}&status=in.(new,open,pending)&order=created_at.desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,reference,subject,status,priority,created_at,customers(full_name)"
+                },
+                {
+                  "key": "assigned_to",
+                  "value": "eq.{{user_id}}"
+                },
+                {
+                  "key": "status",
+                  "value": "in.(new,open,pending)"
+                },
+                {
+                  "key": "order",
+                  "value": "created_at.desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List — Unassigned",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=id,reference,subject,status,priority,created_at,customers(full_name)&assigned_to=is.null&status=in.(new,open)&order=created_at.desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,reference,subject,status,priority,created_at,customers(full_name)"
+                },
+                {
+                  "key": "assigned_to",
+                  "value": "is.null"
+                },
+                {
+                  "key": "status",
+                  "value": "in.(new,open)"
+                },
+                {
+                  "key": "order",
+                  "value": "created_at.desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List — All",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (Array.isArray(j) && j[0]) pm.collectionVariables.set('ticket_id', j[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=id,reference,subject,status,priority,created_at,customers(full_name)&order=created_at.desc&limit=50",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "id,reference,subject,status,priority,created_at,customers(full_name)"
+                },
+                {
+                  "key": "order",
+                  "value": "created_at.desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Count — My open",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "count=exact"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=count&assigned_to=eq.{{user_id}}&status=in.(open,pending)",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "count"
+                },
+                {
+                  "key": "assigned_to",
+                  "value": "eq.{{user_id}}"
+                },
+                {
+                  "key": "status",
+                  "value": "in.(open,pending)"
+                }
+              ]
+            },
+            "description": "Read the total from the Content-Range response header."
+          },
+          "response": []
+        },
+        {
+          "name": "Count — Unassigned",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "count=exact"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=count&assigned_to=is.null&status=in.(new,open)",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "count"
+                },
+                {
+                  "key": "assigned_to",
+                  "value": "is.null"
+                },
+                {
+                  "key": "status",
+                  "value": "in.(new,open)"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Count — Resolved today",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "count=exact"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=count&assigned_to=eq.{{user_id}}&resolved_at=gte.{{today_iso}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "count"
+                },
+                {
+                  "key": "assigned_to",
+                  "value": "eq.{{user_id}}"
+                },
+                {
+                  "key": "resolved_at",
+                  "value": "gte.{{today_iso}}"
+                }
+              ]
+            },
+            "description": "Set the collection variable today_iso to today's date at midnight, e.g. 2026-08-29T00:00:00. Read the total from the Content-Range response header."
+          },
+          "response": []
+        },
+        {
+          "name": "Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=*,customers(id,full_name,phone,email),categories(name_en,name_ar),profiles!assigned_to(full_name)&id=eq.{{ticket_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*,customers(id,full_name,phone,email),categories(name_en,name_ar),profiles!assigned_to(full_name)"
+                },
+                {
+                  "key": "id",
+                  "value": "eq.{{ticket_id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (Array.isArray(j) && j[0]) pm.collectionVariables.set('ticket_id', j[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Test ticket from Postman\",\n  \"description\": \"Created during API testing\",\n  \"customer_id\": \"{{customer_id}}\",\n  \"category_id\": \"REPLACE_WITH_CATEGORY_UUID\",\n  \"priority\": \"medium\",\n  \"department_id\": \"11111111-1111-1111-1111-111111111111\",\n  \"branch_id\": \"33333333-3333-3333-3333-333333333333\",\n  \"created_by\": \"{{user_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ]
+            },
+            "description": "reference and status are generated server-side — do not send them."
+          },
+          "response": []
+        },
+        {
+          "name": "Assign to me (claim)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assigned_to\": \"{{user_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?id=eq.{{ticket_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{ticket_id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unassign",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assigned_to\": null\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?id=eq.{{ticket_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{ticket_id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Status → open",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"open\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?id=eq.{{ticket_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{ticket_id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Status → resolved (with note)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"resolved\",\n  \"resolution_note\": \"Resolved during API testing\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?id=eq.{{ticket_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{ticket_id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/ticket_events?select=*,profiles(full_name)&ticket_id=eq.{{ticket_id}}&order=created_at.desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "ticket_events"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*,profiles(full_name)"
+                },
+                {
+                  "key": "ticket_id",
+                  "value": "eq.{{ticket_id}}"
+                },
+                {
+                  "key": "order",
+                  "value": "created_at.desc"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 Messages",
+      "item": [
+        {
+          "name": "Negative tests",
+          "item": [
+            {
+              "name": "MUST FAIL — omit is_internal",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('is_internal is required', () => pm.expect(pm.response.code).to.be.oneOf([400,409,500]));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "return=representation"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticket_id\": \"{{ticket_id}}\",\n  \"author_id\": \"{{user_id}}\",\n  \"body\": \"No is_internal supplied\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/rest/v1/ticket_messages",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "v1",
+                    "ticket_messages"
+                  ]
+                },
+                "description": "CRITICAL: is_internal is NOT NULL with no default. If this ever succeeds, internal notes can silently become public."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Conversation (public only)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/ticket_messages?select=*,profiles(full_name)&ticket_id=eq.{{ticket_id}}&is_internal=eq.false&order=created_at",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "ticket_messages"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*,profiles(full_name)"
+                },
+                {
+                  "key": "ticket_id",
+                  "value": "eq.{{ticket_id}}"
+                },
+                {
+                  "key": "is_internal",
+                  "value": "eq.false"
+                },
+                {
+                  "key": "order",
+                  "value": "created_at"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Internal notes only",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/ticket_messages?select=*,profiles(full_name)&ticket_id=eq.{{ticket_id}}&is_internal=eq.true&order=created_at",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "ticket_messages"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*,profiles(full_name)"
+                },
+                {
+                  "key": "ticket_id",
+                  "value": "eq.{{ticket_id}}"
+                },
+                {
+                  "key": "is_internal",
+                  "value": "eq.true"
+                },
+                {
+                  "key": "order",
+                  "value": "created_at"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post public reply",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticket_id\": \"{{ticket_id}}\",\n  \"author_id\": \"{{user_id}}\",\n  \"body\": \"Thanks for reporting this — investigating now.\",\n  \"is_internal\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/ticket_messages",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "ticket_messages"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post internal note",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticket_id\": \"{{ticket_id}}\",\n  \"author_id\": \"{{user_id}}\",\n  \"body\": \"Known issue #892 — escalating.\",\n  \"is_internal\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/ticket_messages",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "ticket_messages"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 RLS Isolation",
+      "item": [
+        {
+          "name": "As Omar — customers (expect 2: Cairo/TechSupport)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Omar sees only his scope', () => pm.expect(pm.response.json().length).to.eql(2));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?select=full_name,department_id,branch_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "full_name,department_id,branch_id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "As Layla — customers (expect 1: Alexandria)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Layla sees only her scope', () => pm.expect(pm.response.json().length).to.eql(1));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?select=full_name,department_id,branch_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "full_name,department_id,branch_id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "As Amara — customers (expect 1: Billing)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Amara sees only her scope', () => pm.expect(pm.response.json().length).to.eql(1));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?select=full_name,department_id,branch_id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "full_name,department_id,branch_id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter cannot widen scope (expect empty)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('cannot filter out of a policy', () => pm.expect(pm.response.json()).to.eql([]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/tickets?select=*&department_id=eq.22222222-2222-2222-2222-222222222222",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "tickets"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*"
+                },
+                {
+                  "key": "department_id",
+                  "value": "eq.22222222-2222-2222-2222-222222222222"
+                }
+              ]
+            },
+            "description": "RLS applies first, then your filter narrows what remains. You cannot filter your way out of a policy."
+          },
+          "response": []
+        },
+        {
+          "name": "access_tokens unreachable (expect empty)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('access_tokens has zero client policies', () => pm.expect(pm.response.json()).to.eql([]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/access_tokens?select=*",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "access_tokens"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "As Admin — customers (expect all 4)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('admin bypasses scope', () => pm.expect(pm.response.json().length).to.eql(4));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/customers?select=full_name",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "full_name"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Run after every schema change. Sign in as the named agent first."
+    },
+    {
+      "name": "06 Customer-facing [PENDING]",
+      "item": [
+        {
+          "name": "Get ticket by magic token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('no internal fields leaked', () => {",
+                  "  const b = JSON.stringify(pm.response.json());",
+                  "  ['assigned_to','priority','department_id','branch_id','is_internal'].forEach(f =>",
+                  "    pm.expect(b).to.not.include(f));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"p_token\": \"{{magic_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/rpc/get_ticket_by_token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "rpc",
+                "get_ticket_by_token"
+              ]
+            },
+            "description": "US-026: these fields must be absent from the payload entirely, not merely hidden."
+          },
+          "response": []
+        },
+        {
+          "name": "Submit CSAT",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"p_token\": \"{{magic_token}}\",\n  \"p_rating\": 5,\n  \"p_comment\": \"Quick and helpful\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/rpc/submit_csat",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "rpc",
+                "submit_csat"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "MUST FAIL — expired/invalid token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"p_token\": \"invalid-token-should-be-rejected\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/rpc/get_ticket_by_token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "rpc",
+                "get_ticket_by_token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Requires backend plan §8. No Authorization header — customer has no account."
+    },
+    {
+      "name": "07 Storage",
+      "item": [
+        {
+          "name": "Negative tests",
+          "item": [
+            {
+              "name": "MUST FAIL — upload to another branch",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('cross-branch upload refused', () => pm.expect(pm.response.code).to.be.oneOf([400,403]));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "image/png"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/storage/v1/object/attachments/44444444-4444-4444-4444-444444444444/11111111-1111-1111-1111-111111111111/{{ticket_id}}/leak.png",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "storage",
+                    "v1",
+                    "object",
+                    "attachments",
+                    "44444444-4444-4444-4444-444444444444",
+                    "11111111-1111-1111-1111-111111111111",
+                    "{{ticket_id}}",
+                    "leak.png"
+                  ]
+                },
+                "description": "SAFE TO RUN. Path targets Alexandria branch. As Omar (Cairo) the insert policy must refuse. This is the check table RLS does NOT provide."
+              },
+              "response": []
+            },
+            {
+              "name": "MUST FAIL — sign another branch's file",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('cross-branch signing refused', () => pm.expect(pm.response.code).to.be.oneOf([400,403,404]));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"expiresIn\": 3600\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/storage/v1/object/sign/attachments/44444444-4444-4444-4444-444444444444/11111111-1111-1111-1111-111111111111/{{ticket_id}}/test.png",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "storage",
+                    "v1",
+                    "object",
+                    "sign",
+                    "attachments",
+                    "44444444-4444-4444-4444-444444444444",
+                    "11111111-1111-1111-1111-111111111111",
+                    "{{ticket_id}}",
+                    "test.png"
+                  ]
+                },
+                "description": "SAFE TO RUN. Storage policies are a separate surface from table RLS — an agent blocked from an attachments row can still fetch the object unless this holds."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "List objects in scope",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/storage/v1/object/list/attachments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "storage",
+                "v1",
+                "object",
+                "list",
+                "attachments"
+              ]
+            },
+            "description": "Returns only objects whose path begins {branch_id}/{department_id} matching the signed-in agent."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload (own scope)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "image/png"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "/C:/Users/Ahmed/Downloads/istockphoto-1128165817-170667a.png"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/storage/v1/object/attachments/33333333-3333-3333-3333-333333333333/11111111-1111-1111-1111-111111111111/{{ticket_id}}/test.png",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "storage",
+                "v1",
+                "object",
+                "attachments",
+                "33333333-3333-3333-3333-333333333333",
+                "11111111-1111-1111-1111-111111111111",
+                "{{ticket_id}}",
+                "test.png"
+              ]
+            },
+            "description": "Body: binary file, Content-Type image/png. Path = Cairo branch / Technical Support dept — Omar's scope. Should succeed as Omar."
+          },
+          "response": []
+        },
+        {
+          "name": "Create signed URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"expiresIn\": 3600\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/storage/v1/object/sign/attachments/33333333-3333-3333-3333-333333333333/11111111-1111-1111-1111-111111111111/{{ticket_id}}/test.png",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "storage",
+                "v1",
+                "object",
+                "sign",
+                "attachments",
+                "33333333-3333-3333-3333-333333333333",
+                "11111111-1111-1111-1111-111111111111",
+                "{{ticket_id}}",
+                "test.png"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Backend §7 complete: private bucket + 3 policies scoped by {branch_id}/{department_id} path prefix."
+    },
+    {
+      "name": "08 Notifications",
+      "item": [
+        {
+          "name": "Negative tests",
+          "item": [
+            {
+              "name": "MUST FAIL — insert a notification",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('clients cannot insert', () => pm.expect(pm.response.code).to.be.oneOf([401,403,404]));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "return=representation"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient_id\": \"{{user_id}}\",\n  \"type\": \"assigned\",\n  \"title\": \"Injected\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/rest/v1/notifications",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "v1",
+                    "notifications"
+                  ]
+                },
+                "description": "SAFE TO RUN. No insert policy exists for authenticated users — rows come only from triggers, same pattern as ticket_events."
+              },
+              "response": []
+            },
+            {
+              "name": "MUST FAIL — read another agent's notifications",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const j=pm.response.json();",
+                      "pm.test('no cross-agent leakage', () => j.every(n => n.recipient_id === pm.collectionVariables.get('user_id')));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "apikey",
+                    "value": "{{anon_key}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/rest/v1/notifications?select=*",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "v1",
+                    "notifications"
+                  ],
+                  "query": [
+                    {
+                      "key": "select",
+                      "value": "*"
+                    }
+                  ]
+                },
+                "description": "SAFE TO RUN. No recipient filter in the query — RLS must still scope it. Sign in as Omar after a notification was created for Layla; expect [] or only Omar's own."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "List mine",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j=pm.response.json();",
+                  "pm.test('only own notifications', () => j.every(n => n.recipient_id === pm.collectionVariables.get('user_id')));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/notifications?select=*&recipient_id=eq.{{user_id}}&order=created_at.desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "notifications"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "*"
+                },
+                {
+                  "key": "recipient_id",
+                  "value": "eq.{{user_id}}"
+                },
+                {
+                  "key": "order",
+                  "value": "created_at.desc"
+                }
+              ]
+            },
+            "description": "Returns only the signed-in agent's notifications. RLS policy select_own enforces recipient_id = auth.uid()."
+          },
+          "response": []
+        },
+        {
+          "name": "Unread count",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "count=exact"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/rest/v1/notifications?select=count&recipient_id=eq.{{user_id}}&is_read=eq.false",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "notifications"
+              ],
+              "query": [
+                {
+                  "key": "select",
+                  "value": "count"
+                },
+                {
+                  "key": "recipient_id",
+                  "value": "eq.{{user_id}}"
+                },
+                {
+                  "key": "is_read",
+                  "value": "eq.false"
+                }
+              ]
+            },
+            "description": "For the Home bell badge. Read the total from the Content-Range header."
+          },
+          "response": []
+        },
+        {
+          "name": "Mark one read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_read\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/notifications?id=eq.{{notification_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "notifications"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "eq.{{notification_id}}"
+                }
+              ]
+            },
+            "description": "Set notification_id from the List response first."
+          },
+          "response": []
+        },
+        {
+          "name": "Mark all read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Prefer",
+                "value": "return=representation"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_read\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/rest/v1/notifications?recipient_id=eq.{{user_id}}&is_read=eq.false",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "rest",
+                "v1",
+                "notifications"
+              ],
+              "query": [
+                {
+                  "key": "recipient_id",
+                  "value": "eq.{{user_id}}"
+                },
+                {
+                  "key": "is_read",
+                  "value": "eq.false"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Backend §9 complete: table, RLS, and three triggers verified."
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://svcxmjibmgjtaxuzrquf.supabase.co"
+    },
+    {
+      "key": "anon_key",
+      "value": "PASTE_ANON_KEY_HERE"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    },
+    {
+      "key": "user_id",
+      "value": ""
+    },
+    {
+      "key": "ticket_id",
+      "value": ""
+    },
+    {
+      "key": "customer_id",
+      "value": ""
+    },
+    {
+      "key": "magic_token",
+      "value": ""
+    },
+    {
+      "key": "today_iso",
+      "value": "2026-08-29T00:00:00"
+    },
+    {
+      "key": "notification_id",
+      "value": ""
+    }
+  ]
+}
