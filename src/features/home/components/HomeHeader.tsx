@@ -42,7 +42,19 @@ export function HomeHeader({
   const subtitle = [departmentName, branchName].filter(Boolean).join(' · ');
 
   return (
-    <View style={[styles.root, { paddingHorizontal: theme.spacing.lg, gap: theme.spacing.xxs }]}>
+    // `paddingTop` is the header's own breathing room BELOW the status-bar
+    // inset, which its host adds separately (`HomeScreen`'s surface block).
+    // Without it the greeting sits flush against the clock.
+    <View
+      style={[
+        styles.root,
+        {
+          paddingHorizontal: theme.spacing.lg,
+          paddingTop: theme.spacing.md,
+          gap: theme.spacing.xxs,
+        },
+      ]}
+    >
       <View style={styles.textColumn}>
         {loading ? (
           <Skeleton width="70%" height={28} />

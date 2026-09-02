@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { EmptyState, ErrorState, FAB, SectionHeader, SkeletonList, Text } from '@/core/components';
 import { useLocalisedName } from '@/core/hooks';
@@ -54,6 +54,15 @@ export function HomeScreen() {
   const { t } = useTranslation();
   const nameOf = useLocalisedName();
   const queryClient = useQueryClient();
+  // Applied by hand rather than through `SafeAreaView edges={['top']}`: that
+  // paints the inset with the SCREEN's background, which put a grey
+  // `bgCanvas` band behind the status bar above a white header. Padding the
+  // surface block instead lets the header's own white run edge to edge under
+  // the status bar, which is what Android's mandatory edge-to-edge (SDK 54+)
+  // already assumes. `expo-status-bar` in SDK 57 has no `backgroundColor` or
+  // `translucent` prop to do this with — the bar IS transparent; what shows
+  // through it is whatever the app paints there.
+  const insets = useSafeAreaInsets();
 
   const profile = useAgentProfile();
   const unread = useUnreadNotificationCount();
@@ -101,7 +110,7 @@ export function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.bgCanvas }} edges={['top']}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.bgCanvas }}>
       <ScrollView
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
         contentContainerStyle={{ paddingBottom: theme.spacing.xxxl }}
@@ -112,6 +121,7 @@ export function HomeScreen() {
         <View
           style={{
             backgroundColor: theme.colors.bgSurface,
+            paddingTop: insets.top,
             paddingBottom: theme.spacing.md,
             borderBottomWidth: StyleSheet.hairlineWidth,
             borderBottomColor: theme.colors.borderSubtle,
@@ -211,8 +221,7 @@ export function HomeScreen() {
       <FAB
         onPress={() => router.push('/tickets/new')}
         accessibilityLabel={t('ticket.new')}
-        bottomOffset={theme.spacing.xxxl}
       />
-    </SafeAreaView>
+    </View>
   );
 }

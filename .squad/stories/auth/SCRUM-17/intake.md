@@ -73,7 +73,11 @@ As an agent, I want to log in with email and password so that I can access my ti
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given valid credentials, when I submit, then I am authenticated and routed to Home
+- Given invalid credentials, when I submit, then a clear error appears and no session is created
+- Given a deactivated account, when I attempt login, then access is denied
+- Given the login screen, when displayed, then no self-registration option is present
+- Given an empty required field, when I submit, then validation blocks the request
 ```
 
 ---

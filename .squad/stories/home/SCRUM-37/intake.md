@@ -73,7 +73,10 @@ As an agent, I want my workload at a glance so that I know where to start.
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given I open Home, when it loads, then My Open, Unassigned and Resolved Today counts display
+- Given I change a ticket status, when I return to Home, then counts reflect the change
+- Given an agent with no tickets, when Home loads, then an empty state renders
+- Given the stat row, when laid out, then a slot is reserved beneath it for future SLA alerts
 ```
 
 ---

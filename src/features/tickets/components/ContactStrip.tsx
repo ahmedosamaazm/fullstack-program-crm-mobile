@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Avatar, IconButton, Text } from '@/core/components';
 import { useTheme } from '@/core/lib/theme';
+import { isolateLtr } from '@/core/utils';
 
 import type { TicketDetail } from '../types';
 
@@ -18,9 +19,15 @@ export function ContactStrip({ customer, categoryName }: ContactStripProps) {
   const theme = useTheme();
   const { t } = useTranslation();
 
+  // BRD US-014 row 2 wants name AND phone on this strip. The number has to be
+  // readable, not merely diallable through the button below — an agent reads it
+  // back to the customer, or dials it from a desk phone. `isolateLtr` keeps its
+  // digits in one left-to-right run inside an Arabic line, the same treatment
+  // `CustomerRow` gives it.
+  //
   // Filter before joining — a bare `undefined` segment (the `· undefined`
   // failure mode story 03 documented) would otherwise leak into the subtitle.
-  const subtitle = [categoryName].filter(Boolean).join(' · ');
+  const subtitle = [isolateLtr(customer.phone), categoryName].filter(Boolean).join(' · ');
 
   return (
     <Pressable

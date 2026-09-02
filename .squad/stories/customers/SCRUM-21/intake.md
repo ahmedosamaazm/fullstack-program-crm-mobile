@@ -73,7 +73,11 @@ As an agent, I want to find a customer quickly so that I can act during a live c
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given customers exist, when I open the Customers tab, then a paginated list renders
+- Given I type a partial name, when results return, then matching customers show
+- Given I search an Arabic name, when results return, then matching is correct
+- Given I search a phone number, when results return, then the matching customer shows
+- Given no matches, when the search completes, then an empty state renders
 ```
 
 ---

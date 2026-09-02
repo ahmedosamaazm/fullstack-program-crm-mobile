@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Avatar, Icon, Skeleton, Text, tintForName } from '@/core/components';
 import { useTheme } from '@/core/lib/theme';
+import type { UserRole } from '@/features/auth';
 
 /**
  * `transient` — the fetch failed and retrying may work (network, 5xx).
@@ -17,6 +18,13 @@ export type IdentityErrorKind = 'transient' | 'unavailable';
 
 export type IdentityCardProps = {
   fullName?: string;
+  /**
+   * BRD US-030 row 1 lists role alongside name, department and branch. It gets
+   * its own line rather than a fourth segment on the `department · branch`
+   * subtitle: that line is `numberOfLines={1}`, and an Arabic department and
+   * branch pair already fills it.
+   */
+  role?: UserRole;
   departmentName?: string | null;
   branchName?: string | null;
   loading: boolean;
@@ -35,6 +43,7 @@ const CARD_HEIGHT = 84;
  */
 export function IdentityCard({
   fullName,
+  role,
   departmentName,
   branchName,
   loading,
@@ -113,6 +122,11 @@ export function IdentityCard({
             <Text variant="body" weight="semibold" numberOfLines={1}>
               {displayName}
             </Text>
+            {role ? (
+              <Text variant="caption" weight="medium" tone="muted" numberOfLines={1}>
+                {t(`profile.role.${role}`)}
+              </Text>
+            ) : null}
             {subtitle ? (
               <Text variant="callout" tone="muted" numberOfLines={1}>
                 {subtitle}

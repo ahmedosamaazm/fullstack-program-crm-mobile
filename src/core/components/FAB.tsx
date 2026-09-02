@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { hitSlop, useTheme } from '@/core/lib/theme';
 
@@ -9,17 +8,23 @@ type FABProps = {
   onPress: () => void;
   accessibilityLabel: string;
   icon?: IconName;
-  /** Extra bottom offset, e.g. to clear a tab bar. */
+  /**
+   * Clearance the screen's own layout does NOT already provide beneath the FAB —
+   * e.g. `useSafeAreaInsets().bottom` on a full-height screen with no bar. Inside
+   * the tab shell pass nothing: `BottomNav` is not absolutely positioned, so each
+   * scene already ends at the bar's top edge and the bar already absorbs the
+   * safe-area inset. Adding either here counts it twice.
+   */
   bottomOffset?: number;
 };
 
 /**
  * Anchored to the bottom-end corner, so it lands bottom-right in English and
- * bottom-left in Arabic without a direction check.
+ * bottom-left in Arabic without a direction check. Rests `spacing.md` (12px)
+ * above whatever is beneath it — Figma `50:35`'s gap to `BottomNav`.
  */
 export function FAB({ onPress, accessibilityLabel, icon = 'plus', bottomOffset = 0 }: FABProps) {
   const theme = useTheme();
-  const insets = useSafeAreaInsets();
 
   return (
     <Pressable
@@ -31,7 +36,7 @@ export function FAB({ onPress, accessibilityLabel, icon = 'plus', bottomOffset =
         styles.root,
         theme.elevation.e3,
         {
-          bottom: insets.bottom + theme.spacing.xl + bottomOffset,
+          bottom: theme.spacing.md + bottomOffset,
           end: theme.spacing.xl,
           width: hitSlop + theme.spacing.md,
           height: hitSlop + theme.spacing.md,

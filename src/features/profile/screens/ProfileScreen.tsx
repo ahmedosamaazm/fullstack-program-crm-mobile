@@ -124,6 +124,7 @@ export function ProfileScreen() {
 
         <IdentityCard
           fullName={profile.data?.fullName}
+          role={profile.data?.role}
           departmentName={nameOf(profile.data?.department ?? null)}
           branchName={nameOf(profile.data?.branch ?? null)}
           loading={profile.isPending}

@@ -74,7 +74,10 @@ As an agent, I want to view my identity and control language, theme, and notific
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given the Profile screen, when opened, then my name, role, department and branch display, read-only
+- Given the language row, when tapped, then I can switch between Arabic and English, and the change applies immediately
+- Given the theme row, when tapped, then I can choose light, dark, or system, and the choice persists across restarts
+- Given the sign out row, when tapped, then my session ends and the query cache clears, so no data from my session is visible to the next user
 ```
 
 ---

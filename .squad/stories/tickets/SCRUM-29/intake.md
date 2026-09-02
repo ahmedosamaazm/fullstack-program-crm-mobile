@@ -73,7 +73,9 @@ As an agent on a call with a new customer, I want to add them without leaving th
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given the customer picker, when no match is found, then a New customer action is offered
+- Given I create a customer inline, when saved, then they are selected on the ticket form
+- Given I create a customer inline, when I return, then previously entered ticket fields are preserved
 ```
 
 ---
