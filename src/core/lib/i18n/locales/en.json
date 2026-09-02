@@ -62,5 +62,297 @@
       "network": "Couldn't reach the server. Check your connection.",
       "unknown": "Sign-in failed. Try again."
     }
+  },
+  "file": {
+    "size": {
+      "b": "B",
+      "kb": "KB",
+      "mb": "MB"
+    }
+  },
+  "ticket": {
+    "new": "New ticket",
+    "status": {
+      "new": "New",
+      "open": "Open",
+      "pending": "Pending",
+      "resolved": "Resolved",
+      "closed": "Closed"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "age": {
+      "minute": "m",
+      "hour": "h",
+      "day": "d",
+      "month": "mo",
+      "year": "y",
+      "second": "s"
+    },
+    "rowLabel": "{{subject}}, {{priority}}, {{status}}, {{age}}"
+  },
+  "tickets": {
+    "title": "Tickets",
+    "searchPlaceholder": "Search tickets, customers...",
+    "filters": {
+      "mine": "Mine",
+      "unassigned": "Unassigned",
+      "all": "All"
+    },
+    "groups": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "earlier": "Earlier"
+    },
+    "empty": {
+      "mine": "No tickets assigned to you right now.",
+      "unassigned": "Nothing waiting to be claimed.",
+      "all": "No tickets in your department yet.",
+      "search": "No tickets match \"{{query}}\"."
+    }
+  },
+  "ticketDetail": {
+    "back": "Back",
+    "assignAction": "Assign",
+    "statusAction": "Status",
+    "call": "Call",
+    "email": "Email",
+    "aiSummary": "AI summary",
+    "aiSummaryPending": "Summaries aren't available yet.",
+    "tabs": {
+      "conversation": "Conversation",
+      "internal": "Internal notes",
+      "history": "History"
+    },
+    "internalBadge": "Internal",
+    "message": {
+      "label": "{{author}}, {{time}}",
+      "labelInternal": "Internal note from {{author}}, {{time}}"
+    },
+    "composer": {
+      "public": "Public reply",
+      "internal": "Internal note",
+      "placeholder": "Write a reply...",
+      "send": "Send",
+      "attach": "Add attachment"
+    },
+    "event": {
+      "created": "{{actor}} created the ticket",
+      "status_changed": "{{actor}} changed status from {{from}} to {{to}}",
+      "assigned": "{{actor}} assigned the ticket to {{to}}",
+      "reassigned": "{{actor}} reassigned the ticket from {{from}} to {{to}}",
+      "unassigned": "{{actor}} unassigned the ticket",
+      "unknownAgent": "another agent",
+      "priority_changed": "{{actor}} changed priority from {{from}} to {{to}}",
+      "system": "System"
+    },
+    "empty": {
+      "public": "No messages yet.",
+      "internal": "No internal notes on this ticket.",
+      "history": "No events recorded yet."
+    },
+    "assign": {
+      "title": "Assign to",
+      "searchPlaceholder": "Search agents…",
+      "current": "CURRENT",
+      "unassign": "Unassign ticket",
+      "changed": "This ticket's assignee changed. Reopen the sheet and try again.",
+      "openTickets_zero": "No open tickets",
+      "openTickets_one": "{{count}} open ticket",
+      "openTickets_other": "{{count}} open tickets",
+      "rowLabel_one": "{{name}}, {{count}} open ticket",
+      "rowLabel_other": "{{name}}, {{count}} open tickets",
+      "rowLabelCurrent_one": "{{name}}, current assignee, {{count}} open ticket",
+      "rowLabelCurrent_other": "{{name}}, current assignee, {{count}} open tickets",
+      "empty": {
+        "none": "No other agents in your department.",
+        "search": "No agents match \"{{query}}\"."
+      }
+    },
+    "status": {
+      "title": "Change status",
+      "current": "Current status:",
+      "submit": "Update status",
+      "noteLabel": "Resolution note",
+      "notePlaceholder": "What resolved this ticket?",
+      "terminal": "This ticket is closed. No further transitions are possible.",
+      "description": {
+        "open": "Work is active on this ticket.",
+        "pending": "Waiting on the customer or a third party.",
+        "resolved": "Issue has been fixed and communicated.",
+        "closed": "Finished and archived. This cannot be undone."
+      },
+      "errors": {
+        "noteRequired": "A resolution note is required to resolve a ticket.",
+        "illegalTransition": "That status change isn't allowed from the current state.",
+        "changed": "This ticket's status changed. Reopen the sheet and try again."
+      }
+    }
+  },
+  "createTicket": {
+    "title": "New ticket",
+    "create": "Create",
+    "customer": {
+      "label": "Customer",
+      "placeholder": "Choose a customer",
+      "clear": "Clear selected customer",
+      "newCustomer": "+ New customer"
+    },
+    "customerPicker": {
+      "title": "Choose a customer",
+      "searchPlaceholder": "Search customers, phone…",
+      "empty": "No customers match \"{{query}}\"."
+    },
+    "subject": {
+      "label": "Subject",
+      "placeholder": "Brief description of the issue"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Full details, steps to reproduce, impact…"
+    },
+    "category": {
+      "label": "Category",
+      "placeholder": "Select a category",
+      "title": "Select a category",
+      "empty": "No categories are available for your department."
+    },
+    "priority": {
+      "label": "Priority"
+    },
+    "attachments": {
+      "label": "Attachments",
+      "placeholder": "Tap to attach files",
+      "unavailable": "Attachments aren't available yet."
+    },
+    "errors": {
+      "customerRequired": "Choose a customer.",
+      "subjectRequired": "Enter a subject.",
+      "categoryRequired": "Choose a category."
+    }
+  },
+  "customers": {
+    "title": "Customers",
+    "searchPlaceholder": "Search customers, phone...",
+    "newCustomer": "New customer",
+    "filters": {
+      "all": "All",
+      "withOpenTickets": "With open tickets",
+      "recent": "Recent"
+    },
+    "groups": {
+      "a-f": "A – F",
+      "g-m": "G – M",
+      "n-z": "N – Z",
+      "other": "Other"
+    },
+    "openSuffix": "open",
+    "noOpenTickets": "No open tickets",
+    "rowLabel_zero": "{{name}}, {{phone}}, no open tickets",
+    "rowLabel_one": "{{name}}, {{phone}}, {{count}} open ticket",
+    "rowLabel_other": "{{name}}, {{phone}}, {{count}} open tickets",
+    "empty": {
+      "all": "No customers yet.",
+      "withOpenTickets": "No customers have open tickets.",
+      "recent": "No customers added recently.",
+      "search": "No customers match \"{{query}}\"."
+    }
+  },
+  "customerDetail": {
+    "title": "Customer Detail",
+    "call": "Call",
+    "email": "Email",
+    "history": "Ticket history",
+    "notFound": "This customer isn't available.",
+    "tabs": {
+      "info": "Info",
+      "tickets": "Tickets",
+      "notes": "Notes"
+    },
+    "info": {
+      "phone": "Phone",
+      "email": "Email",
+      "secondaryContacts": "Secondary contact",
+      "department": "Department",
+      "branch": "Branch",
+      "customerSince": "Customer since",
+      "noEmail": "No email on file",
+      "noSecondaryContacts": "None",
+      "unknown": "Unknown",
+      "contactFallbackLabel": "Contact",
+      "callLabel": "Call {{phone}}",
+      "emailLabel": "Email {{email}}"
+    },
+    "empty": {
+      "tickets": "No tickets for this customer yet.",
+      "notes": "Notes aren't available yet."
+    }
+  },
+  "customerNotes": {
+    "notesLabel": "Notes",
+    "attachmentsLabel": "Attachments",
+    "empty": "No notes yet. Add the first one below.",
+    "composerPlaceholder": "Add a note about this customer…",
+    "send": "Save note",
+    "noteLabel": "Note by {{author}}, {{time}}",
+    "attach": {
+      "label": "Attach a file",
+      "hint": "JPG, PNG, WEBP or PDF, up to 10 MB"
+    },
+    "upload": {
+      "title": "Add an attachment",
+      "camera": "Take a photo",
+      "cameraHint": "Photograph a document or a damaged item",
+      "gallery": "Choose from gallery",
+      "galleryHint": "Pick an existing photo",
+      "file": "Choose a file",
+      "fileHint": "JPG, PNG, WEBP or PDF"
+    },
+    "rowLabel": "{{name}}, {{size}}, added by {{author}}",
+    "imageRowLabel": "{{name}}, {{size}}, added by {{author}}. Opens full screen.",
+    "viewerClose": "Close image",
+    "viewerFailed": "This file isn't available.",
+    "errors": {
+      "tooLarge": "That file is {{size}}. The limit is {{max}}.",
+      "typeNotAllowed": "Only JPG, PNG, WEBP and PDF files can be attached."
+    }
+  },
+  "createCustomer": {
+    "title": "New customer",
+    "save": "Save",
+    "nameLabel": "Full name",
+    "namePlaceholder": "First and last name",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "+20 10 0000 0000",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@company.com",
+    "secondaryContacts": "Secondary contacts",
+    "contactNameLabel": "Contact name",
+    "contactNamePlaceholder": "Contact name",
+    "contactPhoneLabel": "Contact phone number",
+    "contactPhonePlaceholder": "Phone number",
+    "addContact": "+ Add contact",
+    "removeContact": "Remove contact",
+    "departmentLabel": "Department",
+    "branchLabel": "Branch",
+    "inherited": "Inherited from your account",
+    "errors": {
+      "nameRequired": "Enter the customer's full name.",
+      "phoneRequired": "Enter a phone number.",
+      "phoneInvalid": "Enter a valid phone number.",
+      "phoneDuplicate": "A customer with this phone already exists in your branch.",
+      "emailInvalid": "Enter a valid email address."
+    }
+  },
+  "editCustomer": {
+    "title": "Edit customer",
+    "action": "Edit customer",
+    "errors": {
+      "notEditable": "You can't edit this customer."
+    }
   }
 }

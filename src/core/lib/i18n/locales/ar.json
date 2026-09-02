@@ -66,5 +66,311 @@
       "network": "تعذّر الوصول إلى الخادم. تحقق من اتصالك.",
       "unknown": "تعذّر تسجيل الدخول. حاول مرة أخرى."
     }
+  },
+  "file": {
+    "size": {
+      "b": "ب",
+      "kb": "ك.ب",
+      "mb": "م.ب"
+    }
+  },
+  "ticket": {
+    "new": "تذكرة جديدة",
+    "status": {
+      "new": "جديدة",
+      "open": "مفتوحة",
+      "pending": "معلّقة",
+      "resolved": "تم حلها",
+      "closed": "مغلقة"
+    },
+    "priority": {
+      "low": "منخفضة",
+      "medium": "متوسطة",
+      "high": "عالية",
+      "urgent": "عاجلة"
+    },
+    "age": {
+      "minute": "د",
+      "hour": "س",
+      "day": "ي",
+      "month": "شهر",
+      "year": "سنة",
+      "second": "ث"
+    },
+    "rowLabel": "{{subject}}، {{priority}}، {{status}}، {{age}}"
+  },
+  "tickets": {
+    "title": "التذاكر",
+    "searchPlaceholder": "ابحث في التذاكر والعملاء...",
+    "filters": {
+      "mine": "لي",
+      "unassigned": "غير مُسندة",
+      "all": "الكل"
+    },
+    "groups": {
+      "today": "اليوم",
+      "yesterday": "أمس",
+      "earlier": "أقدم"
+    },
+    "empty": {
+      "mine": "لا توجد تذاكر مُسندة إليك حاليًا.",
+      "unassigned": "لا يوجد ما ينتظر الاستلام.",
+      "all": "لا توجد تذاكر في قسمك بعد.",
+      "search": "لا توجد تذاكر تطابق \"{{query}}\"."
+    }
+  },
+  "ticketDetail": {
+    "back": "رجوع",
+    "assignAction": "إسناد",
+    "statusAction": "الحالة",
+    "call": "اتصال",
+    "email": "بريد إلكتروني",
+    "aiSummary": "ملخص الذكاء الاصطناعي",
+    "aiSummaryPending": "لم تتوفر الملخصات بعد.",
+    "tabs": {
+      "conversation": "المحادثة",
+      "internal": "ملاحظات داخلية",
+      "history": "السجل"
+    },
+    "internalBadge": "داخلية",
+    "message": {
+      "label": "{{author}}، {{time}}",
+      "labelInternal": "ملاحظة داخلية من {{author}}، {{time}}"
+    },
+    "composer": {
+      "public": "رد عام",
+      "internal": "ملاحظة داخلية",
+      "placeholder": "اكتب ردًا...",
+      "send": "إرسال",
+      "attach": "إضافة مرفق"
+    },
+    "event": {
+      "created": "{{actor}} أنشأ التذكرة",
+      "status_changed": "{{actor}} غيّر الحالة من {{from}} إلى {{to}}",
+      "assigned": "{{actor}} أسند التذكرة إلى {{to}}",
+      "reassigned": "{{actor}} أعاد إسناد التذكرة من {{from}} إلى {{to}}",
+      "unassigned": "{{actor}} ألغى إسناد التذكرة",
+      "unknownAgent": "موظف آخر",
+      "priority_changed": "{{actor}} غيّر الأولوية من {{from}} إلى {{to}}",
+      "system": "النظام"
+    },
+    "empty": {
+      "public": "لا توجد رسائل بعد.",
+      "internal": "لا توجد ملاحظات داخلية على هذه التذكرة.",
+      "history": "لم تُسجَّل أحداث بعد."
+    },
+    "assign": {
+      "title": "إسناد إلى",
+      "searchPlaceholder": "ابحث عن وكيل…",
+      "current": "الحالي",
+      "unassign": "إلغاء إسناد التذكرة",
+      "changed": "تغيّر المسؤول عن هذه التذكرة. أعد فتح القائمة وحاول مرة أخرى.",
+      "openTickets_zero": "لا توجد تذاكر مفتوحة",
+      "openTickets_one": "تذكرة واحدة مفتوحة",
+      "openTickets_two": "تذكرتان مفتوحتان",
+      "openTickets_few": "{{count}} تذاكر مفتوحة",
+      "openTickets_many": "{{count}} تذكرة مفتوحة",
+      "openTickets_other": "{{count}} تذكرة مفتوحة",
+      "rowLabel_zero": "{{name}}، لا توجد تذاكر مفتوحة",
+      "rowLabel_one": "{{name}}، تذكرة واحدة مفتوحة",
+      "rowLabel_two": "{{name}}، تذكرتان مفتوحتان",
+      "rowLabel_few": "{{name}}، {{count}} تذاكر مفتوحة",
+      "rowLabel_many": "{{name}}، {{count}} تذكرة مفتوحة",
+      "rowLabel_other": "{{name}}، {{count}} تذكرة مفتوحة",
+      "rowLabelCurrent_zero": "{{name}}، المسؤول الحالي، لا توجد تذاكر مفتوحة",
+      "rowLabelCurrent_one": "{{name}}، المسؤول الحالي، تذكرة واحدة مفتوحة",
+      "rowLabelCurrent_two": "{{name}}، المسؤول الحالي، تذكرتان مفتوحتان",
+      "rowLabelCurrent_few": "{{name}}، المسؤول الحالي، {{count}} تذاكر مفتوحة",
+      "rowLabelCurrent_many": "{{name}}، المسؤول الحالي، {{count}} تذكرة مفتوحة",
+      "rowLabelCurrent_other": "{{name}}، المسؤول الحالي، {{count}} تذكرة مفتوحة",
+      "empty": {
+        "none": "لا يوجد وكلاء آخرون في قسمك.",
+        "search": "لا يوجد وكلاء يطابقون \"{{query}}\"."
+      }
+    },
+    "status": {
+      "title": "تغيير الحالة",
+      "current": "الحالة الحالية:",
+      "submit": "تحديث الحالة",
+      "noteLabel": "ملاحظة الحل",
+      "notePlaceholder": "ما الذي حلّ هذه التذكرة؟",
+      "terminal": "هذه التذكرة مغلقة. لا يمكن إجراء أي تغيير آخر على حالتها.",
+      "description": {
+        "open": "العمل جارٍ على هذه التذكرة.",
+        "pending": "في انتظار العميل أو طرف ثالث.",
+        "resolved": "تم حل المشكلة وإبلاغ العميل.",
+        "closed": "أُغلقت وأُرشفت. لا يمكن التراجع عن هذا."
+      },
+      "errors": {
+        "noteRequired": "يلزم إدخال ملاحظة حل عند حل التذكرة.",
+        "illegalTransition": "لا يمكن تغيير الحالة على هذا النحو من الحالة الحالية.",
+        "changed": "تغيّرت حالة هذه التذكرة. أعد فتح القائمة وحاول مرة أخرى."
+      }
+    }
+  },
+  "createTicket": {
+    "title": "تذكرة جديدة",
+    "create": "إنشاء",
+    "customer": {
+      "label": "العميل",
+      "placeholder": "اختر عميلًا",
+      "clear": "إلغاء اختيار العميل",
+      "newCustomer": "+ عميل جديد"
+    },
+    "customerPicker": {
+      "title": "اختر عميلًا",
+      "searchPlaceholder": "ابحث بالاسم أو رقم الهاتف…",
+      "empty": "لا يوجد عملاء يطابقون \"{{query}}\"."
+    },
+    "subject": {
+      "label": "الموضوع",
+      "placeholder": "وصف موجز للمشكلة"
+    },
+    "description": {
+      "label": "الوصف",
+      "placeholder": "التفاصيل الكاملة وخطوات إعادة الإنتاج والأثر…"
+    },
+    "category": {
+      "label": "التصنيف",
+      "placeholder": "اختر تصنيفًا",
+      "title": "اختر تصنيفًا",
+      "empty": "لا توجد تصنيفات متاحة لقسمك."
+    },
+    "priority": {
+      "label": "الأولوية"
+    },
+    "attachments": {
+      "label": "المرفقات",
+      "placeholder": "اضغط لإرفاق ملفات",
+      "unavailable": "المرفقات غير متاحة بعد."
+    },
+    "errors": {
+      "customerRequired": "اختر عميلًا.",
+      "subjectRequired": "أدخل الموضوع.",
+      "categoryRequired": "اختر تصنيفًا."
+    }
+  },
+  "customers": {
+    "title": "العملاء",
+    "searchPlaceholder": "ابحث بالاسم أو رقم الهاتف...",
+    "newCustomer": "عميل جديد",
+    "filters": {
+      "all": "الكل",
+      "withOpenTickets": "لديهم تذاكر مفتوحة",
+      "recent": "الأحدث"
+    },
+    "groups": {
+      "a-f": "A – F",
+      "g-m": "G – M",
+      "n-z": "N – Z",
+      "other": "أخرى"
+    },
+    "openSuffix": "مفتوحة",
+    "noOpenTickets": "لا توجد تذاكر مفتوحة",
+    "rowLabel_zero": "{{name}}، {{phone}}، لا توجد تذاكر مفتوحة",
+    "rowLabel_one": "{{name}}، {{phone}}، تذكرة واحدة مفتوحة",
+    "rowLabel_two": "{{name}}، {{phone}}، تذكرتان مفتوحتان",
+    "rowLabel_few": "{{name}}، {{phone}}، {{count}} تذاكر مفتوحة",
+    "rowLabel_many": "{{name}}، {{phone}}، {{count}} تذكرة مفتوحة",
+    "rowLabel_other": "{{name}}، {{phone}}، {{count}} تذكرة مفتوحة",
+    "empty": {
+      "all": "لا يوجد عملاء بعد.",
+      "withOpenTickets": "لا يوجد عملاء لديهم تذاكر مفتوحة.",
+      "recent": "لم يُضف عملاء مؤخرًا.",
+      "search": "لا يوجد عملاء يطابقون \"{{query}}\"."
+    }
+  },
+  "customerDetail": {
+    "title": "بيانات العميل",
+    "call": "اتصال",
+    "email": "بريد إلكتروني",
+    "history": "سجل التذاكر",
+    "notFound": "هذا العميل غير متاح.",
+    "tabs": {
+      "info": "المعلومات",
+      "tickets": "التذاكر",
+      "notes": "الملاحظات"
+    },
+    "info": {
+      "phone": "رقم الهاتف",
+      "email": "البريد الإلكتروني",
+      "secondaryContacts": "جهة اتصال إضافية",
+      "department": "القسم",
+      "branch": "الفرع",
+      "customerSince": "عميل منذ",
+      "noEmail": "لا يوجد بريد إلكتروني مسجل",
+      "noSecondaryContacts": "لا يوجد",
+      "unknown": "غير معروف",
+      "contactFallbackLabel": "جهة اتصال",
+      "callLabel": "الاتصال بـ {{phone}}",
+      "emailLabel": "مراسلة {{email}}"
+    },
+    "empty": {
+      "tickets": "لا توجد تذاكر لهذا العميل بعد.",
+      "notes": "الملاحظات غير متاحة بعد."
+    }
+  },
+  "customerNotes": {
+    "notesLabel": "الملاحظات",
+    "attachmentsLabel": "المرفقات",
+    "empty": "لا توجد ملاحظات بعد. أضف أول ملاحظة بالأسفل.",
+    "composerPlaceholder": "أضف ملاحظة عن هذا العميل…",
+    "send": "حفظ الملاحظة",
+    "noteLabel": "ملاحظة من {{author}}، {{time}}",
+    "attach": {
+      "label": "إرفاق ملف",
+      "hint": "JPG أو PNG أو WEBP أو PDF، بحد أقصى 10 م.ب"
+    },
+    "upload": {
+      "title": "إضافة مرفق",
+      "camera": "التقاط صورة",
+      "cameraHint": "تصوير مستند أو عنصر تالف",
+      "gallery": "اختيار من المعرض",
+      "galleryHint": "اختيار صورة موجودة",
+      "file": "اختيار ملف",
+      "fileHint": "JPG أو PNG أو WEBP أو PDF"
+    },
+    "rowLabel": "{{name}}, {{size}}, أضافه {{author}}",
+    "imageRowLabel": "{{name}}, {{size}}, أضافه {{author}}. يفتح على كامل الشاشة.",
+    "viewerClose": "إغلاق الصورة",
+    "viewerFailed": "هذا الملف غير متاح.",
+    "errors": {
+      "tooLarge": "حجم هذا الملف {{size}}. الحد الأقصى المسموح به هو {{max}}.",
+      "typeNotAllowed": "يمكن إرفاق ملفات JPG وPNG وWEBP وPDF فقط."
+    }
+  },
+  "createCustomer": {
+    "title": "عميل جديد",
+    "save": "حفظ",
+    "nameLabel": "الاسم الكامل",
+    "namePlaceholder": "الاسم الأول واسم العائلة",
+    "phoneLabel": "رقم الهاتف",
+    "phonePlaceholder": "+20 10 0000 0000",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "name@company.com",
+    "secondaryContacts": "جهات اتصال إضافية",
+    "contactNameLabel": "اسم جهة الاتصال",
+    "contactNamePlaceholder": "اسم جهة الاتصال",
+    "contactPhoneLabel": "رقم هاتف جهة الاتصال",
+    "contactPhonePlaceholder": "رقم الهاتف",
+    "addContact": "+ إضافة جهة اتصال",
+    "removeContact": "حذف جهة الاتصال",
+    "departmentLabel": "القسم",
+    "branchLabel": "الفرع",
+    "inherited": "موروث من حسابك",
+    "errors": {
+      "nameRequired": "أدخل الاسم الكامل للعميل.",
+      "phoneRequired": "أدخل رقم الهاتف.",
+      "phoneInvalid": "أدخل رقم هاتف صحيحًا.",
+      "phoneDuplicate": "يوجد عميل بهذا الرقم في فرعك بالفعل.",
+      "emailInvalid": "أدخل بريدًا إلكترونيًا صحيحًا."
+    }
+  },
+  "editCustomer": {
+    "title": "تعديل بيانات العميل",
+    "action": "تعديل بيانات العميل",
+    "errors": {
+      "notEditable": "لا يمكنك تعديل بيانات هذا العميل."
+    }
   }
 }

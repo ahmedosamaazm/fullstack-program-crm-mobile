@@ -69,7 +69,8 @@ function RootNavigator() {
 
   return (
     // `contentStyle` is what stops React Navigation's `DefaultTheme` (white
-    // `background`/`card`) painting a wipe behind every push (story 26, SCRUM-13).
+    // `background`/`card`) painting a wipe behind every push, and behind the
+    // three `presentation: 'modal'` screens below (story 26, SCRUM-13).
     <Stack
       screenOptions={{
         headerShown: false,
@@ -78,6 +79,11 @@ function RootNavigator() {
     >
       <Stack.Protected guard={status === 'signedIn'}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="tickets/[id]" />
+        <Stack.Screen name="customers/[id]" />
+        <Stack.Screen name="customers/new" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="customers/edit/[id]" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="tickets/new" options={{ presentation: 'modal' }} />
       </Stack.Protected>
       <Stack.Protected guard={status === 'signedOut'}>
         <Stack.Screen name="(auth)" />
