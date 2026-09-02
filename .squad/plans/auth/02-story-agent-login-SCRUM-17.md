@@ -655,3 +655,22 @@ Flag adding `jest-expo` + `@testing-library/react-native` as a follow-up story o
 4. **`TextField`'s uppercase label under Arabic.** `TextField.tsx:106` applies `textTransform: 'uppercase'` plus `tracking.wide` to the label. Uppercase is a no-op for Arabic but the letter-spacing is not, and Story 01 §15 already flagged the same treatment on `SectionHeader`. Inherited here, not resolved here.
 
 **STOP HERE. Report to the user and wait for confirmation before proceeding to Story 03.**
+
+
+## **[Corrected 2026-09-01 — design audit]**
+
+Two Login token values in this plan's spec table do not match the live frame `7:4614`, and
+the implementation faithfully reproduced the PLAN rather than the design:
+
+| Element | Plan / code | Figma binds |
+|---|---|---|
+| Tagline tone | `textMuted` | **`textSecondary`** |
+| Wordmark weight | `bold` | **SemiBold** |
+
+Fix the table before the next pass at this screen, or the drift regenerates.
+
+Separately: this plan created `(auth)/forgot-password.tsx` as a placeholder and deferred the
+real flow to **US-003, which has no story file and no entry in `00-index.md`.** The screen is
+therefore unscheduled rather than in progress — frame `7:4687` is fully designed and waiting.
+The route file also holds its screen inline, violating hard rule 1 (not eslint-enforced, so
+nothing caught it); fix that when US-003 is picked up.

@@ -5,16 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { Image, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Button, Text, TextField, TextInput } from '@/core/components';
+import { Button, LanguageToggle, Text, TextField, TextInput } from '@/core/components';
 import { useTheme } from '@/core/lib/theme';
+import { EMAIL_PATTERN } from '@/core/utils';
 
 import { useSignIn } from '../hooks';
 import type { SignInInput } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports -- Metro's static-asset convention requires `require()`, not an ES import, for local images.
 const azmMark = require('../../../../assets/brand/azm-mark.png');
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function LoginScreen() {
   const { t } = useTranslation();
@@ -143,9 +142,9 @@ export function LoginScreen() {
         </View>
       </ScrollView>
 
-      {/* <View style={{ paddingBottom: theme.spacing.xl, alignItems: 'center' }}>
+      <View style={{ paddingBottom: theme.spacing.xl, alignItems: 'center' }}>
         <LanguageToggle />
-      </View> */}
+      </View>
     </SafeAreaView>
   );
 }
