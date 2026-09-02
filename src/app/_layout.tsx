@@ -80,6 +80,7 @@ function RootNavigator() {
       <Stack.Protected guard={status === 'signedIn'}>
         <Stack.Screen name="index" />
         <Stack.Screen name="tickets/[id]" />
+        <Stack.Screen name="notifications" />
         <Stack.Screen name="customers/[id]" />
         <Stack.Screen name="customers/new" options={{ presentation: 'modal' }} />
         <Stack.Screen name="customers/edit/[id]" options={{ presentation: 'modal' }} />

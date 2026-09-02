@@ -354,5 +354,15 @@
     "errors": {
       "notEditable": "You can't edit this customer."
     }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": "No alerts yet. You'll see assignments, replies and status changes here.",
+    "rowLabel": "{{title}}. {{body}}. {{age}} ago. {{state}}",
+    "state": {
+      "read": "Read",
+      "unread": "Unread"
+    }
   }
 }
