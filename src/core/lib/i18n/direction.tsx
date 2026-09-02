@@ -1,31 +1,36 @@
 import { createContext, useContext, type PropsWithChildren, type ReactElement } from 'react';
-import { I18nManager } from 'react-native';
 
-export type Direction = 'ltr' | 'rtl';
+import { nativeDirection, type Direction } from './config';
+import { useAppDirection } from './locale-context';
+
+export type { Direction };
 
 const DirectionContext = createContext<Direction | null>(null);
 
 /**
- * Direction for the current subtree. Falls back to `I18nManager.isRTL` (the
- * app-wide direction latched at startup) when no `DirectionScope` is above —
- * which is the normal case everywhere except the dev gallery's RTL preview.
+ * Direction for the current subtree, resolved in priority order:
+ *
+ * 1. an enclosing `DirectionScope` (the dev gallery's RTL preview),
+ * 2. `LocaleProvider`'s live direction — reactive, so an in-session language
+ *    switch re-renders every consumer,
+ * 3. `I18nManager.isRTL`, the direction latched at process start, for the
+ *    handful of trees that render above the provider.
  *
  * Two places read this: `Icon`'s RTL mirror and `Text`'s `align="end"`. Both
  * must go through this hook rather than reading `I18nManager` directly, or
- * they can't follow a per-subtree override and the gallery's preview would
- * lie about exactly the two things most likely to be wrong.
+ * they stay stuck on the latched native direction after a switch — the exact
+ * half-flipped state (Arabic text, LTR alignment) this replaces.
  */
 export function useDirection(): Direction {
   const scoped = useContext(DirectionContext);
-  return scoped ?? (I18nManager.isRTL ? 'rtl' : 'ltr');
+  const app = useAppDirection();
+  return scoped ?? app ?? nativeDirection();
 }
 
 /**
- * Forces `direction` for its subtree without touching `I18nManager` — RN
- * latches direction at startup, so an in-session flip there needs a restart
- * (see `applyDirection`). Callers still need `style={{ direction }}` on the
- * wrapping view for Yoga to actually mirror layout; this only affects what
- * `useDirection()` reports.
+ * Forces `direction` for its subtree, overriding `LocaleProvider`. Callers
+ * still need `style={{ direction }}` on the wrapping view for Yoga to mirror
+ * layout; this only affects what `useDirection()` reports.
  */
 export function DirectionScope({
   direction,

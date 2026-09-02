@@ -22,7 +22,8 @@ export type TextTone =
   | 'success'
   | 'warning'
   | 'danger'
-  | 'info';
+  | 'info'
+  | 'internal';
 
 const TONE_TOKEN: Record<TextTone, ColorToken> = {
   primary: 'textPrimary',
@@ -37,6 +38,7 @@ const TONE_TOKEN: Record<TextTone, ColorToken> = {
   warning: 'statusWarning',
   danger: 'statusDanger',
   info: 'statusInfo',
+  internal: 'textInternal',
 };
 
 export type TextProps = Omit<RNTextProps, 'style'> & {

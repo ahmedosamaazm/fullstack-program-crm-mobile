@@ -94,3 +94,9 @@ export function isAppError(value: unknown): value is AppError {
     hasStringProp(value, 'message')
   );
 }
+
+/** The i18n key a screen should render for a thrown value — generic fallback otherwise. */
+export function errorMessageKey(error: unknown): string {
+  if (isAppError(error)) return error.messageKey;
+  return 'states.errorBody';
+}

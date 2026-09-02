@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { useTheme } from '@/core/lib/theme';
 
@@ -12,6 +12,8 @@ export type ModalHeaderProps = {
   actionLabel?: string;
   onAction?: () => void;
   actionDisabled?: boolean;
+  /** Swaps the action label for a spinner while the submit is in flight. */
+  actionLoading?: boolean;
 };
 
 /**
@@ -25,6 +27,7 @@ export function ModalHeader({
   actionLabel,
   onAction,
   actionDisabled = false,
+  actionLoading = false,
 }: ModalHeaderProps) {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -60,7 +63,9 @@ export function ModalHeader({
         accessibilityState={{ disabled: !onAction || actionDisabled }}
         style={styles.side}
       >
-        {actionLabel ? (
+        {actionLoading ? (
+          <ActivityIndicator size="small" color={theme.colors.textLink} />
+        ) : actionLabel ? (
           <Text variant="callout" weight="semibold" tone={actionDisabled ? 'disabled' : 'link'}>
             {actionLabel}
           </Text>

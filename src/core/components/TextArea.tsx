@@ -78,7 +78,7 @@ export function TextArea({
             padding: theme.spacing.md,
             paddingTop: Platform.OS === 'ios' ? IOS_TOP_PADDING : theme.spacing.md,
             backgroundColor: theme.colors.bgSurface,
-            borderColor: error ? theme.colors.statusDanger : theme.colors.borderDefault,
+            borderColor: error ? theme.colors.statusDanger : theme.colors.borderInteractive,
             opacity: disabled ? theme.opacity.disabled : theme.opacity.full,
           },
         ]}

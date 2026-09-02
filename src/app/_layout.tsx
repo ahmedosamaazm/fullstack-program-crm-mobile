@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { OfflineBanner } from '@/core/components';
+import { DirectionRoot, OfflineBanner, ThemedStatusBar } from '@/core/components';
 import { bootstrap, hideSplash, type BootstrapResult } from '@/core/lib/bootstrap';
+import { LocaleProvider } from '@/core/lib/i18n';
 import { queryClient } from '@/core/lib/query-client';
-import { ThemeProvider } from '@/core/lib/theme';
+import { ThemeProvider, useTheme } from '@/core/lib/theme';
 import { AuthProvider, useAuth } from '@/features/auth';
 
 /**
@@ -32,16 +33,21 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <ThemeProvider initialMode={result.themeMode} fontsLoaded={result.fontsLoaded}>
-          <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <RootNavigator />
-              <OfflineBanner />
-            </AuthProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
-      </SafeAreaProvider>
+      <LocaleProvider initialLocale={result.locale}>
+        <DirectionRoot>
+          <SafeAreaProvider>
+            <ThemeProvider initialMode={result.themeMode} fontsLoaded={result.fontsLoaded}>
+              <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                  <RootNavigator />
+                  <ThemedStatusBar />
+                  <OfflineBanner />
+                </AuthProvider>
+              </QueryClientProvider>
+            </ThemeProvider>
+          </SafeAreaProvider>
+        </DirectionRoot>
+      </LocaleProvider>
     </GestureHandlerRootView>
   );
 }
@@ -53,6 +59,7 @@ export default function RootLayout() {
  */
 function RootNavigator() {
   const { status } = useAuth();
+  const theme = useTheme();
 
   useEffect(() => {
     if (status !== 'loading') void hideSplash();
@@ -61,7 +68,14 @@ function RootNavigator() {
   if (status === 'loading') return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    // `contentStyle` is what stops React Navigation's `DefaultTheme` (white
+    // `background`/`card`) painting a wipe behind every push (story 26, SCRUM-13).
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: theme.colors.bgCanvas },
+      }}
+    >
       <Stack.Protected guard={status === 'signedIn'}>
         <Stack.Screen name="index" />
       </Stack.Protected>

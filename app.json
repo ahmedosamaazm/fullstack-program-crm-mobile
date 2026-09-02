@@ -26,8 +26,24 @@
       "expo-secure-store",
       "expo-localization",
       "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "AZM needs access to your photos so you can attach them to a customer.",
+          "cameraPermission": "AZM needs access to your camera so you can photograph documents for a customer."
+        }
+      ],
       ["expo-router", { "root": "./src/app" }],
-      "expo-splash-screen"
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/brand/azm-mark.png",
+          "imageWidth": 123,
+          "resizeMode": "contain",
+          "backgroundColor": "#f8f9fb",
+          "dark": { "backgroundColor": "#0c1014" }
+        }
+      ]
     ],
     "scheme": "azmcrm",
     "experiments": {

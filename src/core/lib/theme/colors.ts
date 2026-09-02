@@ -1,7 +1,7 @@
 import { primitives } from './primitives';
 
 /**
- * 35 semantic colour keys, resolved from Figma's `color/*` variable collection.
+ * 39 semantic colour keys, resolved from Figma's `color/*` variable collection.
  * Deriving `ThemeColors` from `lightColors` means every key is written once —
  * `darkColors` gets both exhaustiveness (a missing key is a type error) and
  * excess-property checking (a typo'd key is a type error).
@@ -49,6 +49,14 @@ export const lightColors = {
 
   tabActive: primitives.blue500,
   tabInactive: primitives.neutral550,
+  /** Tinted pill behind the active tab's icon. Distinct from `bgPrimarySubtle`,
+   *  which several components already depend on at a much paler value. */
+  bgTabActive: primitives.blueTabPillLight,
+
+  // Internal notes only — not a general-purpose purple (story 07).
+  bgInternalSubtle: primitives.purpleSubtleLight,
+  borderInternal: primitives.purple500,
+  textInternal: primitives.purple500,
 } as const;
 
 export type ThemeColors = Record<keyof typeof lightColors, string>;
@@ -60,7 +68,9 @@ export const darkColors: ThemeColors = {
   bgSurfaceRaised: primitives.neutral800,
   bgSurfaceSunken: primitives.neutral1000,
   bgPrimary: primitives.blueLight,
-  bgPrimaryPressed: primitives.blue500,
+  // Brighter than `bgPrimary`, not darker: on a dark ground `blue500` put
+  // `textOnPrimary` at 3.09:1, under AA (story 26, SCRUM-13).
+  bgPrimaryPressed: primitives.blueLighter,
   bgPrimarySubtle: primitives.bluePrimarySubtleDark,
   bgSuccessSubtle: primitives.greenSubtleDark,
   bgWarningSubtle: primitives.orangeSubtleDark,
@@ -95,4 +105,15 @@ export const darkColors: ThemeColors = {
 
   tabActive: primitives.blueLight,
   tabInactive: primitives.neutral450,
+  // Figma specifies the active-tab pill in light mode only. Reusing the existing
+  // dark blue-subtle surface rather than inventing a dark value — open question
+  // for design alongside the other BottomNav flags.
+  // Story 26 (SCRUM-13) measured the placeholder: the pill is **1.08** against
+  // the bar it sits on, i.e. invisible. Design owes a dark pill value or an
+  // explicit "no pill in dark" — see that story's open question 4.
+  bgTabActive: primitives.bluePrimarySubtleDark,
+
+  bgInternalSubtle: primitives.purpleSubtleDark,
+  borderInternal: primitives.purple300,
+  textInternal: primitives.purple300,
 };

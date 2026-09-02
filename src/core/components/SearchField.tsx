@@ -32,7 +32,7 @@ export function SearchField({ value, onChangeText, placeholder, onSubmit, onClea
           paddingHorizontal: theme.spacing.md,
           gap: theme.spacing.sm,
           backgroundColor: theme.colors.bgSurfaceSunken,
-          borderColor: theme.colors.borderDefault,
+          borderColor: theme.colors.borderInteractive,
         },
       ]}
     >
