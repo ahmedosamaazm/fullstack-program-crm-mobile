@@ -382,5 +382,32 @@
       "read": "مقروء",
       "unread": "غير مقروء"
     }
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "sections": {
+      "settings": "الإعدادات",
+      "account": "الحساب"
+    },
+    "identity": {
+      "errorTransient": "تعذّر تحميل ملفك الشخصي.",
+      "errorUnavailable": "ملفك الشخصي غير متاح."
+    },
+    "appInformation": "معلومات التطبيق",
+    "appVersion": "AZM {{version}}",
+    "appVersionBuild": "AZM {{version}} (إصدار {{build}})",
+    "notifications": {
+      "label": "الإشعارات",
+      "push": "إشعارات فورية",
+      "email": "البريد الإلكتروني",
+      "none": "معطّلة",
+      "pending": "لم تبدأ الإشعارات بعد. سيُحفظ اختيارك حتى تبدأ."
+    },
+    "signOut": "تسجيل الخروج",
+    "signOutConfirm": {
+      "title": "تسجيل الخروج؟",
+      "body": "ستحتاج إلى تسجيل الدخول مرة أخرى لعرض تذاكرك.",
+      "confirm": "تسجيل الخروج"
+    }
   }
 }
