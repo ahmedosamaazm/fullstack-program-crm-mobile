@@ -1,7 +1,7 @@
 import { supabase } from '@/core/lib/supabase';
-import { toAppError, type AppError } from '@/core/utils';
+import { toAppError, type AppError, type LocalisedName } from '@/core/utils';
 
-import type { AgentProfile, SignInInput } from './types';
+import type { AgentProfile, AgentProfileWithOrg, DepartmentAgent, SignInInput } from './types';
 
 /** GoTrue error codes → i18n keys. Anything unlisted falls through to `unknown`. */
 const AUTH_MESSAGE_KEYS: Record<string, string> = {
@@ -54,6 +54,82 @@ export async function fetchAgentProfile(userId: string): Promise<AgentProfile | 
     departmentId: data.department_id,
     branchId: data.branch_id,
   };
+}
+
+type ProfileWithOrgRow = {
+  id: string;
+  full_name: string;
+  email: string;
+  role: AgentProfile['role'];
+  is_active: boolean;
+  department_id: string;
+  branch_id: string;
+  departments: LocalisedName | null;
+  branches: LocalisedName | null;
+};
+
+/** `fetchAgentProfile` plus the agent's department and branch names, for the Home greeting. */
+export async function fetchAgentProfileWithOrg(userId: string): Promise<AgentProfileWithOrg | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select(
+      'id, full_name, email, role, is_active, department_id, branch_id, departments(name_en, name_ar), branches(name_en, name_ar)',
+    )
+    .eq('id', userId)
+    .maybeSingle<ProfileWithOrgRow>();
+
+  if (error) throw toAppError(error);
+  if (!data) return null;
+
+  return {
+    id: data.id,
+    fullName: data.full_name,
+    email: data.email,
+    role: data.role,
+    isActive: data.is_active,
+    departmentId: data.department_id,
+    branchId: data.branch_id,
+    // Raw pairs, not resolved names — see `core/utils/locale-name.ts`. The
+    // cache must stay locale-independent so a language switch needs no refetch.
+    department: data.departments,
+    branch: data.branches,
+  };
+}
+
+const AGENT_LIST_SELECT = 'id, full_name, tickets!tickets_assigned_to_fkey(count)';
+
+const OPEN_STATUSES = ['new', 'open', 'pending'] as const; // API §4.4 — the set `fetchMyTickets` uses.
+
+type DepartmentAgentRow = {
+  id: string;
+  full_name: string;
+  /** PostgREST returns an aggregate embed as a one-element array. */
+  tickets: { count: number }[] | null;
+};
+
+/**
+ * Agents in `departmentId`, for the assign sheet (story 08). `tickets` references
+ * `profiles` twice (assignee and creator), so the `!tickets_assigned_to_fkey`
+ * hint is mandatory — an unhinted `tickets(count)` is a PostgREST ambiguity
+ * error. The embed is deliberately an OUTER join (no `!inner`) so an agent with
+ * zero open tickets still appears — the agent you most want to see here.
+ */
+export async function fetchDepartmentAgents(departmentId: string): Promise<DepartmentAgent[]> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select(AGENT_LIST_SELECT)
+    .eq('department_id', departmentId)
+    .eq('is_active', true)
+    .in('tickets.status', OPEN_STATUSES)
+    .order('full_name', { ascending: true })
+    .returns<DepartmentAgentRow[]>();
+
+  if (error) throw toAppError(error);
+  return (data ?? []).map((row) => ({
+    id: row.id,
+    fullName: row.full_name,
+    openTicketCount: row.tickets?.[0]?.count ?? 0,
+  }));
 }
 
 export async function signIn(input: SignInInput): Promise<AgentProfile> {

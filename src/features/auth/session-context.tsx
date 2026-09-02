@@ -51,11 +51,28 @@ export function AuthProvider({ children }: PropsWithChildren) {
       });
 
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      setState((prev) => ({
-        status: session ? 'signedIn' : 'signedOut',
-        session,
-        profile: session ? prev.profile : null,
-      }));
+      setState((prev) => {
+        // An involuntary sign-out — a rejected refresh token, a session expired
+        // by the server's inactivity timeout, or a sign-out from another device.
+        // `signOut()` below clears the cache on the path an agent takes
+        // deliberately; this is the path they don't, and BRD `:476` does not
+        // distinguish between them. Without it, an expired session returns the
+        // agent to Login with the previous session's tickets and customers still
+        // resident for whoever signs in next.
+        //
+        // Guarded on the TRANSITION, not on `!session`: this listener also fires
+        // with a null session on first subscribe, and clearing an empty cache on
+        // every cold start is wasted work that also races the first queries.
+        if (prev.status === 'signedIn' && !session) {
+          queryClient.clear();
+        }
+
+        return {
+          status: session ? 'signedIn' : 'signedOut',
+          session,
+          profile: session ? prev.profile : null,
+        };
+      });
     });
 
     return () => {
@@ -69,8 +86,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
       ...state,
       setProfile: (profile) => setState((prev) => ({ ...prev, profile })),
       signOut: async () => {
-        await signOutAgent();
-        queryClient.clear();
+        try {
+          await signOutAgent();
+        } finally {
+          // Clear regardless: a network failure must not leave the previous
+          // agent's tickets and customers in the cache for the next sign-in.
+          queryClient.clear();
+        }
       },
     }),
     [state],
