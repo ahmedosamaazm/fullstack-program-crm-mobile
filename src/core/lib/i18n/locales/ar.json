@@ -20,6 +20,9 @@
     "charactersLeft_many": "{{formattedCount}} حرفًا متبقيًا",
     "charactersLeft_other": "{{formattedCount}} حرف متبقٍ"
   },
+  "file": {
+    "size": { "b": "ب", "kb": "ك.ب", "mb": "م.ب" }
+  },
   "tabs": {
     "home": "الرئيسية",
     "tickets": "التذاكر",
@@ -67,11 +70,32 @@
       "unknown": "تعذّر تسجيل الدخول. حاول مرة أخرى."
     }
   },
-  "file": {
-    "size": {
-      "b": "ب",
-      "kb": "ك.ب",
-      "mb": "م.ب"
+  "home": {
+    "greeting": {
+      "morning": "صباح الخير، {{name}}",
+      "afternoon": "مساء الخير، {{name}}",
+      "evening": "مساء الخير، {{name}}",
+      "generic": "مرحبًا بعودتك"
+    },
+    "stats": {
+      "myOpen": "مفتوحة لديّ",
+      "unassigned": "غير مُسندة",
+      "resolvedToday": "تم حلها اليوم"
+    },
+    "sections": {
+      "mine": "تذاكري",
+      "unassigned": "غير مُسندة"
+    },
+    "viewAll": "عرض الكل",
+    "notifications": "الإشعارات",
+    "notificationsWithCount": "الإشعارات، {{count}} غير مقروءة",
+    "claim": {
+      "action": "استلام",
+      "taken": "استلم وكيل آخر هذه التذكرة."
+    },
+    "empty": {
+      "mine": "لا توجد تذاكر مُسندة إليك حاليًا.",
+      "unassigned": "لا يوجد ما ينتظر الاستلام."
     }
   },
   "ticket": {
@@ -117,6 +141,16 @@
       "unassigned": "لا يوجد ما ينتظر الاستلام.",
       "all": "لا توجد تذاكر في قسمك بعد.",
       "search": "لا توجد تذاكر تطابق \"{{query}}\"."
+    }
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "markAllRead": "تعليم الكل كمقروء",
+    "empty": "لا توجد تنبيهات بعد. ستظهر هنا الإسنادات والردود وتغييرات الحالة.",
+    "rowLabel": "{{title}}. {{body}}. منذ {{age}}. {{state}}",
+    "state": {
+      "read": "مقروء",
+      "unread": "غير مقروء"
     }
   },
   "ticketDetail": {
@@ -371,16 +405,6 @@
     "action": "تعديل بيانات العميل",
     "errors": {
       "notEditable": "لا يمكنك تعديل بيانات هذا العميل."
-    }
-  },
-  "notifications": {
-    "title": "الإشعارات",
-    "markAllRead": "تعليم الكل كمقروء",
-    "empty": "لا توجد تنبيهات بعد. ستظهر هنا الإسنادات والردود وتغييرات الحالة.",
-    "rowLabel": "{{title}}. {{body}}. منذ {{age}}. {{state}}",
-    "state": {
-      "read": "مقروء",
-      "unread": "غير مقروء"
     }
   },
   "profile": {
