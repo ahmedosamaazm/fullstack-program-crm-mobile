@@ -13,9 +13,10 @@ writing a file — the repo wins over anything restated here.
 
 ## 0 — Before touching code
 
-- Is there a plan? `.squad/plans/<feature>/NN-story-*.md`. If yes, **follow it** and use
-  `/squad-implement` instead. This skill is for the mechanical scaffold when no plan exists yet or
-  the plan says "scaffold per rn-feature".
+- Is there a plan? `.squad/plans/<feature>/NN-story-*.md`. If yes, **the plan's file list wins**
+  over this skill's default layout — see `CLAUDE.md` "Working in this repo" for how a plan is
+  read. This skill is for the mechanical scaffold when no plan exists yet or the plan says
+  "scaffold per rn-feature".
 - Does the data already exist? Check `src/core/types/database.ts` for the tables. If a table is
   missing, stop: that is backend scope (`docs/phase1_backend_plan.md`), then `/gen-types`.
 - Is it really a new feature, or a screen inside an existing one? A ticket-shaped thing belongs
