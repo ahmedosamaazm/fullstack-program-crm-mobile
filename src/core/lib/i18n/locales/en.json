@@ -364,5 +364,32 @@
       "read": "Read",
       "unread": "Unread"
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "sections": {
+      "settings": "Settings",
+      "account": "Account"
+    },
+    "identity": {
+      "errorTransient": "Couldn't load your profile.",
+      "errorUnavailable": "Your profile isn't available."
+    },
+    "appInformation": "App information",
+    "appVersion": "AZM {{version}}",
+    "appVersionBuild": "AZM {{version}} (build {{build}})",
+    "notifications": {
+      "label": "Notifications",
+      "push": "Push",
+      "email": "Email",
+      "none": "Off",
+      "pending": "Notifications aren't sending yet. Your choice is saved for when they are."
+    },
+    "signOut": "Sign out",
+    "signOutConfirm": {
+      "title": "Sign out?",
+      "body": "You'll need to sign in again to see your tickets.",
+      "confirm": "Sign out"
+    }
   }
 }
