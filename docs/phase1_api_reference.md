@@ -421,47 +421,70 @@ Supports **US-027**. Submit twice → second attempt must fail on the unique con
 
 ---
 
-# 8. Storage 🔨
+# 8. Storage ✅
 
-**Requires §7 of the backend plan.** No bucket exists yet.
+The `attachments` bucket is **private**, capped at **10 MB**, and accepts exactly four MIME types:
+`image/jpeg`, `image/png`, `image/webp`, `application/pdf` (`docs/phase1_backend_plan.md:93-108`).
+Three `storage.objects` policies (select/insert/delete) scope every object by the first two path
+segments, matched against `current_branch()` / `current_department()`.
 
-## 8.1 Upload 🔨
+## 8.1 Upload ✅
 
 ```
-POST {{base_url}}/storage/v1/object/attachments/{branch_id}/{department_id}/{ticket_id}/{uuid}-{filename}
+POST {{base_url}}/storage/v1/object/attachments/{branch_id}/{department_id}/{ticket_id|customer_id}/{uuid}-{filename}
 ```
 
-Body: binary, `Content-Type` matching the file.
+Body: binary, `Content-Type` matching the file. **The third path segment may be a ticket id or a
+customer id** — both are in scope (`docs/phase1_backend_plan.md:112`); story 24 (SCRUM-26) is the
+customer-scoped client of this endpoint, built via `supabase.storage.from('attachments').upload(...)`
+with an `ArrayBuffer`/`Uint8Array` body rather than a raw `fetch`.
 
-## 8.2 Signed URL 🔨
+## 8.2 Signed URL ✅
 
 ```
 POST {{base_url}}/storage/v1/object/sign/attachments/{path}
 ```
 
 ```json
-{ "expiresIn": 3600 }
+{ "expiresIn": 60 }
 ```
 
-### Storage isolation test 🔨
+Story 24's client mints a 60-second URL per view rather than the 3600s shown historically here —
+short enough that a URL that escapes a log or a screenshot has little time left to resolve.
 
-As Omar, request a signed URL for a file under Layla's branch path → must be refused.
+### Storage isolation test
+
+As Omar, request a signed URL for a file under Layla's branch path → must be refused. **Not yet
+re-run against a live agent JWT** — story 24 (SCRUM-26) names this its verification step 2 and it
+must run before the story is signed off; see `docs/phase1_known_issues.md`.
 
 > Worth stating plainly: table RLS on `attachments` does **not** protect the files. Storage policies are a separate surface and must enforce the same scope independently.
 
 ---
 
-# 9. Notifications 🔨
+# 9. Notifications ✅
 
-**Requires §9 of the backend plan.** No table exists yet.
+Table, RLS and three of five triggers are live and verified — see backend plan §9. Columns:
+`id`, `recipient_id`, `ticket_id` (nullable), `type` (`text`, no enum/CHECK), `title`,
+`body` (nullable), `is_read`, `created_at`.
+
+`select_own` scopes SELECT/UPDATE to `recipient_id = auth.uid()`; `update_own`'s `with check`
+does the same for writes. **There is no INSERT policy for `authenticated`** — a client cannot
+fabricate a notification. Rows come only from three triggers: `trg_notify_assignment` (ticket
+assigned), `trg_notify_reply` (customer reply), `trg_notify_status` (status change, excluding
+self). Two more types — `unassigned` (needs `pg_cron`) and `rating` (needs the CSAT flow from
+§8) — are planned but do not fire yet.
 
 ```
 GET {{base_url}}/rest/v1/notifications?select=*&recipient_id=eq.{{user_id}}&order=created_at.desc
+GET {{base_url}}/rest/v1/notifications?select=*&recipient_id=eq.{{user_id}}&is_read=eq.false
+    Prefer: count=exact                                  → unread count for the Home bell badge
 PATCH {{base_url}}/rest/v1/notifications?id=eq.{{id}}     → {"is_read": true}
 PATCH {{base_url}}/rest/v1/notifications?recipient_id=eq.{{user_id}}&is_read=eq.false   → mark all read
 ```
 
-Supports **US-028**.
+Supports **US-028** — the in-app notification centre. The OS **push** delivery half of US-028's
+first criterion is not covered by this table or this client; it is owned by SCRUM-40/41.
 
 ---
 
