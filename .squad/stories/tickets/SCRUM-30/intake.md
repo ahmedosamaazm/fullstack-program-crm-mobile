@@ -73,7 +73,11 @@ As an agent, I want all ticket context in one screen so that I can work it effic
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given a ticket, when I open it, then reference, subject, status and priority display in the header
+- Given a ticket, when opened, then the customer strip shows name and phone
+- Given the customer strip, when tapped, then the customer profile opens
+- Given the detail screen, when rendered, then Conversation, Internal Notes and History segments are present
+- Given the screen layout, when built, then a collapsible slot is reserved above the thread for a future AI summary
 ```
 
 ---

@@ -417,6 +417,11 @@
       "errorTransient": "تعذّر تحميل ملفك الشخصي.",
       "errorUnavailable": "ملفك الشخصي غير متاح."
     },
+    "role": {
+      "agent": "موظف دعم",
+      "manager": "مدير",
+      "admin": "مسؤول النظام"
+    },
     "appInformation": "معلومات التطبيق",
     "appVersion": "AZM {{version}}",
     "appVersionBuild": "AZM {{version}} (إصدار {{build}})",

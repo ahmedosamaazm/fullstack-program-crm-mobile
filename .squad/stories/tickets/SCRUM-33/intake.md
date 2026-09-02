@@ -73,7 +73,11 @@ As an agent, I want to assign a ticket so that ownership is clear.
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given the assign sheet, when it opens, then only agents in my department are listed
+- Given I select an agent, when confirmed, then the ticket is assigned and the sheet closes
+- Given an assigned ticket, when I reassign, then the new assignee replaces the previous
+- Given I unassign, when confirmed, then the ticket returns to the unassigned pool
+- Given any assignment change, when saved, then an assigned event is recorded
 ```
 
 ---

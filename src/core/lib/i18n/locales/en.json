@@ -399,6 +399,11 @@
       "errorTransient": "Couldn't load your profile.",
       "errorUnavailable": "Your profile isn't available."
     },
+    "role": {
+      "agent": "Agent",
+      "manager": "Manager",
+      "admin": "Administrator"
+    },
     "appInformation": "App information",
     "appVersion": "AZM {{version}}",
     "appVersionBuild": "AZM {{version}} (build {{build}})",

@@ -73,7 +73,12 @@ As an agent, I want to move a ticket through its lifecycle so that its state is 
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given a ticket in any state, when I open the status picker, then only legally reachable states are offered
+- Given a transition to resolved, when I confirm, then a resolution note is required
+- Given a transition to resolved, when saved, then resolved_at is set
+- Given a closed ticket, when any transition is attempted, then it is rejected
+- Given an illegal transition submitted directly to the API, when executed, then the database rejects it
+- Given any transition, when saved, then a status_changed event records from and to values
 ```
 
 ---

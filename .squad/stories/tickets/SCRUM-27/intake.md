@@ -73,7 +73,11 @@ As an agent, I want to filter my ticket queue so that I can focus on what matter
 *(Checklist, bullets, Gherkin, etc. Prefilled for Azure DevOps when the work item has acceptance criteria.)*
 
 ```
-
+- Given the Tickets tab, when it opens, then Mine, Unassigned and All filters are available
+- Given the Mine filter, when applied, then only tickets assigned to me show
+- Given a ticket row, when rendered, then reference, subject, customer, status, priority and time display
+- Given status and priority indicators, when rendered, then each carries a non-color cue
+- Given I pull down, when the gesture completes, then the list refreshes
 ```
 
 ---
