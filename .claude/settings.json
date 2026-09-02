@@ -1,5 +1,33 @@
 {
   "enabledPlugins": {
     "expo@claude-plugins-official": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/rn-guard.cjs\"",
+            "timeout": 15,
+            "statusMessage": "Guarding generated types, secrets, native folders..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/rn-post-edit.cjs\"",
+            "timeout": 150,
+            "statusMessage": "RN post-edit: eslint --fix, locale parity, expo deps..."
+          }
+        ]
+      }
+    ]
   }
 }
