@@ -86,10 +86,10 @@ export function TextField({
           {
             height: FIELD_HEIGHT,
             borderRadius: theme.radius.md,
-            paddingHorizontal: theme.spacing.md,
+            paddingHorizontal: theme.spacing.lg,
             gap: theme.spacing.sm,
             backgroundColor: theme.colors.bgSurface,
-            borderColor: error ? theme.colors.statusDanger : theme.colors.borderDefault,
+            borderColor: error ? theme.colors.statusDanger : theme.colors.borderInteractive,
             opacity: disabled ? theme.opacity.disabled : theme.opacity.full,
           },
         ]}

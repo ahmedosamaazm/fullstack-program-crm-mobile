@@ -55,7 +55,11 @@ export function TabBar({ children, scrollable = false }: TabBarProps) {
         horizontal
         showsHorizontalScrollIndicator={false}
         accessibilityRole="tablist"
-        contentContainerStyle={{ flexDirection: 'row', gap: theme.spacing.lg }}
+        contentContainerStyle={{
+          flexDirection: 'row',
+          gap: theme.spacing.xl,
+          paddingHorizontal: theme.spacing.lg,
+        }}
       >
         {children}
       </ScrollView>
@@ -63,7 +67,18 @@ export function TabBar({ children, scrollable = false }: TabBarProps) {
   }
 
   return (
-    <View accessibilityRole="tablist" style={[styles.bar, { gap: theme.spacing.lg }]}>
+    <View
+      accessibilityRole="tablist"
+      style={[
+        styles.bar,
+        {
+          gap: theme.spacing.xl,
+          paddingHorizontal: theme.spacing.lg,
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderBottomColor: theme.colors.borderSubtle,
+        },
+      ]}
+    >
       {children}
     </View>
   );

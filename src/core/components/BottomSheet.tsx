@@ -51,10 +51,10 @@ export function BottomSheet({ visible, onClose, title, children }: BottomSheetPr
           stiffness: 220,
         }),
         // `bgOverlay` is opaque per Figma — alpha lives in this animation
-        // (to `opacity.strong`), not baked into the token, or the sheet
-        // would open behind solid black.
+        // (to `opacity.medium`, matching the frame's #181c2266 = 0.4), not baked
+        // into the token, or the sheet would open behind solid black.
         Animated.timing(backdrop, {
-          toValue: theme.opacity.strong,
+          toValue: theme.opacity.medium,
           duration: 180,
           useNativeDriver: true,
         }),
@@ -62,7 +62,7 @@ export function BottomSheet({ visible, onClose, title, children }: BottomSheetPr
     } else {
       Animated.timing(backdrop, { toValue: 0, duration: 140, useNativeDriver: true }).start();
     }
-  }, [visible, screenHeight, translateY, backdrop, theme.opacity.strong]);
+  }, [visible, screenHeight, translateY, backdrop, theme.opacity.medium]);
 
   const close = () => {
     Animated.timing(translateY, {
@@ -133,12 +133,17 @@ export function BottomSheet({ visible, onClose, title, children }: BottomSheetPr
               <View
                 style={[
                   styles.handle,
-                  { backgroundColor: theme.colors.borderStrong, borderRadius: theme.radius.full },
+                  { backgroundColor: theme.colors.borderDefault, borderRadius: theme.radius.full },
                 ]}
               />
             </View>
           )}
-          <View style={{ paddingHorizontal: theme.spacing.xl, paddingTop: title ? theme.spacing.lg : 0 }}>
+          <View
+            style={{
+              paddingHorizontal: theme.spacing.lg,
+              paddingTop: title ? theme.spacing.lg : 0,
+            }}
+          >
             {children}
           </View>
         </Animated.View>
@@ -151,5 +156,5 @@ const styles = StyleSheet.create({
   root: { flex: 1, justifyContent: 'flex-end' },
   sheet: { width: '100%', alignItems: 'stretch' },
   handleRow: { alignItems: 'center' },
-  handle: { width: 40, height: 4 },
+  handle: { width: 36, height: 4 },
 });

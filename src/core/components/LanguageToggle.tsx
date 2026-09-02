@@ -1,28 +1,25 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
-import { currentLocale, setLocale, type Locale } from '@/core/lib/i18n';
+import { useLocale, type Locale } from '@/core/lib/i18n';
 import { useTheme } from '@/core/lib/theme';
 
 import { SegmentedControl } from './SegmentedControl';
 import { Text } from './Text';
 
 /**
- * Wraps `SegmentedControl` with the two supported locales and surfaces the
- * restart notice `setLocale` reports when the direction cannot flip until
- * relaunch. Domain-free — reused by the login footer and later by Profile.
+ * Wraps `SegmentedControl` with the two supported locales. `changeLocale` flips
+ * the layout in-frame and reloads to bring the native layer with it, so the
+ * notice below is the *failure* path only — a reload that could not run.
+ * Domain-free — reused by the login footer and by Profile.
  */
 export function LanguageToggle() {
   const { t } = useTranslation();
   const theme = useTheme();
-  const [restartRequired, setRestartRequired] = useState(false);
-  const current = currentLocale();
+  const { locale: current, restartPending, changeLocale } = useLocale();
 
-  async function handleChange(locale: Locale) {
-    if (locale === current) return;
-    const needsRestart = await setLocale(locale);
-    setRestartRequired(needsRestart);
+  function handleChange(next: Locale) {
+    void changeLocale(next);
   }
 
   return (
@@ -39,9 +36,9 @@ export function LanguageToggle() {
           { value: 'ar' as const, label: t('settings.languageArabic') },
         ]}
         value={current}
-        onChange={(locale) => void handleChange(locale)}
+        onChange={handleChange}
       />
-      {restartRequired ? (
+      {restartPending ? (
         <Text variant="caption" tone="muted" align="center">
           {t('settings.restartRequired')}
         </Text>

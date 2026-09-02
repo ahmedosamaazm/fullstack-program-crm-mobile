@@ -50,7 +50,7 @@ export function Dropzone({
             padding: theme.spacing.lg,
             borderRadius: theme.radius.md,
             backgroundColor: theme.colors.bgSurface,
-            borderColor: error ? theme.colors.statusDanger : theme.colors.borderDefault,
+            borderColor: error ? theme.colors.statusDanger : theme.colors.borderInteractive,
             opacity: disabled ? theme.opacity.disabled : theme.opacity.full,
           },
         ]}

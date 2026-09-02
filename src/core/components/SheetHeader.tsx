@@ -22,6 +22,10 @@ export function SheetHeader({ title, actionLabel, onActionPress, showHandle = tr
     <View style={{ backgroundColor: theme.colors.bgSurface }}>
       {showHandle ? (
         <View style={[styles.handleRow, { height: HANDLE_ROW_HEIGHT }]}>
+          {/* `borderStrong` stays here deliberately (story 26, SCRUM-13). It
+              measures 1.69 light / 2.68 dark, under 1.4.11's 3.0 — but the
+              grabber is an affordance, not a control boundary: the sheet is
+              dismissible by tap and by gesture without it. Do not re-open. */}
           <View
             style={[
               styles.handle,
@@ -36,7 +40,7 @@ export function SheetHeader({ title, actionLabel, onActionPress, showHandle = tr
           styles.titleRow,
           {
             height: TITLE_ROW_HEIGHT,
-            paddingHorizontal: theme.spacing.xl,
+            paddingHorizontal: theme.spacing.lg,
             borderBottomWidth: StyleSheet.hairlineWidth,
             borderBottomColor: theme.colors.borderSubtle,
           },

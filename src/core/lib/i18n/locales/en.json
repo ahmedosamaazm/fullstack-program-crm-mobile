@@ -1,6 +1,7 @@
 {
   "common": {
     "appName": "AZM",
+    "back": "Back",
     "retry": "Try again",
     "cancel": "Cancel",
     "close": "Close",
@@ -36,7 +37,7 @@
     "language": "Language",
     "languageEnglish": "English",
     "languageArabic": "Arabic",
-    "restartRequired": "Restart the app to apply the new text direction."
+    "restartRequired": "Language applied. Restart the app manually to finish updating the layout."
   },
   "placeholder": {
     "screenBody": "This screen is scaffolded. Its feature story will fill it in."

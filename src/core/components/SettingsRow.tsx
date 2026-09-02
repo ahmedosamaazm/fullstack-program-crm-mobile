@@ -58,18 +58,37 @@ export function SettingsRow(props: SettingsRowProps) {
   );
 }
 
-export type RowGroupProps = { children: ReactNode };
+const ICON_SIZE = 20; // matches the Icon size rendered above at line 39.
+
+export type RowGroupProps = {
+  children: ReactNode;
+  /**
+   * `edge` (default) insets dividers by `spacing.lg`. `label` insets them past
+   * the leading icon too — Figma node 83:697 — for groups whose rows all carry
+   * one. A group with mixed icon/no-icon rows should stay on `edge`.
+   */
+  dividerInset?: 'edge' | 'label';
+};
 
 /** Owns the shared surface, radius, clipping and inset dividers between `SettingsRow`s. */
-export function RowGroup({ children }: RowGroupProps) {
+export function RowGroup({ children, dividerInset = 'edge' }: RowGroupProps) {
   const theme = useTheme();
   const items = Children.toArray(children);
+  const insetStart =
+    dividerInset === 'label'
+      ? theme.spacing.lg + ICON_SIZE + theme.spacing.md
+      : theme.spacing.lg;
 
   return (
     <View
       style={[
         styles.group,
-        { borderRadius: theme.radius.md, backgroundColor: theme.colors.bgSurface },
+        {
+          borderRadius: theme.radius.md,
+          backgroundColor: theme.colors.bgSurface,
+          // Figma binds e2 + e1 to every RowGroup card.
+          ...theme.elevation.e2,
+        },
       ]}
     >
       {items.map((child, index) => (
@@ -78,7 +97,7 @@ export function RowGroup({ children }: RowGroupProps) {
             <View
               style={[
                 styles.divider,
-                { marginStart: theme.spacing.lg, backgroundColor: theme.colors.borderSubtle },
+                { marginStart: insetStart, backgroundColor: theme.colors.borderSubtle },
               ]}
             />
           ) : null}

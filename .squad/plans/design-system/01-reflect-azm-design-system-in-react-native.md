@@ -586,3 +586,47 @@ Run on **both** an Android device and iOS: the weight-synthesis bug, the dashed 
 
 Finally, `git status` should show `tokens.ts` deleted and `App.tsx`/`index.ts` staged as deleted —
 the repo currently has those two deletions unstaged from a previous session.
+
+
+## **[Updated 2026-09-01 — icon layer now renders Figma's own paths]**
+
+The `Icon renderer = MaterialCommunityIcons` decision above is SUPERSEDED. `Icon.tsx` now
+renders the vector paths exported from Figma's `Icon` component set (`81:699`) through
+`react-native-svg@15.15.4`, so the glyphs are the design's own drawings rather than a
+different draftsman's lookalikes. The API (`name`, `size`, `color`, `mirrorInRtl`) and the
+strict `IconName` union are unchanged — that union is exactly what made the swap a one-file
+change, as this plan predicted.
+
+Two consequences worth recording:
+
+1. **Stroke width is now a real value, not baked into a glyph font.** Every path renders at
+   the design's 1.6 on a 20x20 canvas and scales with `size`. The "accepted trade" recorded
+   in the decision table no longer applies.
+2. **`@expo/vector-icons` stays a dependency** even though nothing in `src/` imports it —
+   `expo-router` imports it internally (`native-tabs`, `primitives`). It is an undeclared
+   peer; do not remove it. The MaterialSymbols font in the bundle is expo-router's.
+
+### Flags resolved by the Figma icon-set completion
+
+**Flag 2 (four glyphs missing from the Figma set) is CLOSED.** The set went 23 → 34 on
+2026-09-01. Seven glyphs (Home, Tickets, Customers, Search, Plus, Inbox, CheckCircle) already
+existed as inline artwork inside BottomNav, SearchField, FAB and StatCard and were promoted
+into the set unchanged in shape, normalised from their native 14/16/24px and 1.166–2.0 strokes
+onto 20×20 / 1.6. Four (Close, Alert, Edit, EyeOff) existed nowhere in the file and were drawn
+to spec — **these four still need a design review.**
+
+**Flag 1 (ArrowLeft / Chevron are physical names) stays OPEN, and is now sharper:** Figma
+draws `ArrowLeft` as a CHEVRON, not an arrow with a shaft. The app previously rendered
+Material's `arrow-left`, so that icon was wrong on every screen regardless of the naming
+question. It now matches the design. The naming question itself is unchanged.
+
+### New findings raised to design, not resolved here
+
+1. The source components still carry inline copies of the seven promoted glyphs rather than
+   instances of the new symbols. Swapping them is a separate change.
+2. `BottomNav Active=Profile` draws its icons at 22px; the other three variants use 24px.
+3. **There are no filled icons in the design.** Active tabs are the same glyph in `tabActive`
+   blue — verified across all four BottomNav variants: geometry is byte-identical, only the
+   stroke colour differs. The app's `homeFilled` / `ticketsFilled` / `customersFilled` /
+   `userFilled` names were an invention and have been removed; `IconName` is 38 → 34.
+   `(tabs)/_layout.tsx` now renders one glyph per tab and swaps colour only.
