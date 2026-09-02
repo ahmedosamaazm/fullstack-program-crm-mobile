@@ -16,6 +16,9 @@
     "charactersLeft_one": "{{formattedCount}} character left",
     "charactersLeft_other": "{{formattedCount}} characters left"
   },
+  "file": {
+    "size": { "b": "B", "kb": "KB", "mb": "MB" }
+  },
   "tabs": {
     "home": "Home",
     "tickets": "Tickets",
@@ -63,11 +66,32 @@
       "unknown": "Sign-in failed. Try again."
     }
   },
-  "file": {
-    "size": {
-      "b": "B",
-      "kb": "KB",
-      "mb": "MB"
+  "home": {
+    "greeting": {
+      "morning": "Good morning, {{name}}",
+      "afternoon": "Good afternoon, {{name}}",
+      "evening": "Good evening, {{name}}",
+      "generic": "Welcome back"
+    },
+    "stats": {
+      "myOpen": "My open",
+      "unassigned": "Unassigned",
+      "resolvedToday": "Resolved today"
+    },
+    "sections": {
+      "mine": "My tickets",
+      "unassigned": "Unassigned"
+    },
+    "viewAll": "View all",
+    "notifications": "Notifications",
+    "notificationsWithCount": "Notifications, {{count}} unread",
+    "claim": {
+      "action": "Claim",
+      "taken": "Someone else claimed this ticket."
+    },
+    "empty": {
+      "mine": "No tickets assigned to you right now.",
+      "unassigned": "Nothing waiting to be claimed."
     }
   },
   "ticket": {
@@ -113,6 +137,16 @@
       "unassigned": "Nothing waiting to be claimed.",
       "all": "No tickets in your department yet.",
       "search": "No tickets match \"{{query}}\"."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": "No alerts yet. You'll see assignments, replies and status changes here.",
+    "rowLabel": "{{title}}. {{body}}. {{age}} ago. {{state}}",
+    "state": {
+      "read": "Read",
+      "unread": "Unread"
     }
   },
   "ticketDetail": {
@@ -353,16 +387,6 @@
     "action": "Edit customer",
     "errors": {
       "notEditable": "You can't edit this customer."
-    }
-  },
-  "notifications": {
-    "title": "Notifications",
-    "markAllRead": "Mark all read",
-    "empty": "No alerts yet. You'll see assignments, replies and status changes here.",
-    "rowLabel": "{{title}}. {{body}}. {{age}} ago. {{state}}",
-    "state": {
-      "read": "Read",
-      "unread": "Unread"
     }
   },
   "profile": {

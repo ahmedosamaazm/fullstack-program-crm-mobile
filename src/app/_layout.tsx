@@ -78,7 +78,7 @@ function RootNavigator() {
       }}
     >
       <Stack.Protected guard={status === 'signedIn'}>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="tickets/[id]" />
         <Stack.Screen name="notifications" />
         <Stack.Screen name="customers/[id]" />
